@@ -121,6 +121,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
         }
     }
 
+    //Version con CapabilityFilters
     public void setDiscoveryManager(CapabilityFilter... filters) {
         if ( discoveryManager == null ) {
             discoveryManager = DiscoveryManager.getInstance();
