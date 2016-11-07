@@ -24,6 +24,7 @@ import com.connectsdk.core.MediaInfo;
 import com.connectsdk.device.ConnectableDevice;
 import com.connectsdk.device.ConnectableDeviceListener;
 import com.connectsdk.device.DevicePicker;
+import com.connectsdk.discovery.CapabilityFilter;
 import com.connectsdk.discovery.DiscoveryManager;
 import com.connectsdk.discovery.DiscoveryManagerListener;
 import com.connectsdk.service.DeviceService;
@@ -110,6 +111,21 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
         if ( discoveryManager == null ) {
             discoveryManager = DiscoveryManager.getInstance();
             DiscoveryManager.getInstance().registerDefaultDeviceTypes();
+            discoveryManager.setPairingLevel( DiscoveryManager.PairingLevel.ON );
+            discoveryManager.addListener( this );
+            discoveryManager.start();
+        } else {
+            discoveryManager.addListener( this );
+            discoveryManager.start();
+            calculateMenuVisibility();
+        }
+    }
+
+    public void setDiscoveryManager(CapabilityFilter... filters) {
+        if ( discoveryManager == null ) {
+            discoveryManager = DiscoveryManager.getInstance();
+            DiscoveryManager.getInstance().registerDefaultDeviceTypes();
+            discoveryManager.setCapabilityFilters(filters);
             discoveryManager.setPairingLevel( DiscoveryManager.PairingLevel.ON );
             discoveryManager.addListener( this );
             discoveryManager.start();
