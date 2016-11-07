@@ -408,6 +408,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
                         @Override
                         public void onError( ServiceCommandError error ) {
+                            error.printStackTrace();
                             stop();
                             Toast.makeText( activity, "Contenido no compatible", Toast.LENGTH_LONG )
                                     .show();
