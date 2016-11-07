@@ -154,12 +154,14 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     }
 
     public void registerForActivity( Activity activity, Menu menu, int menuId ) {
-        log( "registerForActivity" );
-        this.activity = activity;
-        castMenuItem = menu.findItem( menuId );
-        castMenuItem.setIcon( R.drawable.cast_off );
-        castMenuItem.setOnMenuItemClickListener( this );
-        calculateMenuVisibility();
+        if ( this.activity == null ) {
+            log( "registerForActivity" );
+            this.activity = activity;
+            castMenuItem = menu.findItem( menuId );
+            castMenuItem.setIcon( R.drawable.cast_off );
+            castMenuItem.setOnMenuItemClickListener( this );
+            calculateMenuVisibility();
+        }
     }
 
     public void setCastMenuVisible( Boolean visible ) {
