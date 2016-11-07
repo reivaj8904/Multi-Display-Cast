@@ -67,6 +67,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     private HashMap<String,PlayStatusListener> playStatusListeners = new HashMap<>();
     private MediaControl mMediaControl;
     private Boolean isPaused = false;
+    private Boolean statusStartPlayingFired = false;
 
     //Unset at destroy
     private Activity activity;
@@ -159,7 +160,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     @Override
     public void onDeviceAdded( DiscoveryManager manager, ConnectableDevice device ) {
         calculateMenuVisibility();
-        String mRecentDeviceId = StorageUtils.getRecentDeviceId( context );
+        /*String mRecentDeviceId = StorageUtils.getRecentDeviceId( context );
 
         if ( mRecentDeviceId != null && connectableDevice == null ) {
             log( "reconnect from previous device" );
@@ -169,7 +170,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                 device.addListener( this );
                 device.connect();
             }
-        }
+        }*/
     }
 
     @Override
@@ -537,6 +538,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
     public void onDestroy() {
         mediaObject = null;
+        statusStartPlayingFired = false;
         NotificationsHelper.cancelNotification( context );
         if ( connectToCastDialog != null ) {
             connectToCastDialog.cancel();
@@ -601,19 +603,22 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
     private void sendNotSupportGetStatus() {
         if ( playStatusListeners.size() > 0 ) {
-            mediaObject.setIsSeekable( false );
-            new Handler( Looper.getMainLooper() ).post( new Runnable() {
-                @Override
-                public void run() {
-                    for ( Map.Entry<String,PlayStatusListener> playStatusListener : playStatusListeners
-                            .entrySet() ) {
-                        playStatusListener.getValue()
-                                .onPlayStatusChanged( PlayStatusListener.STATUS_NOT_SUPPORT_LISTENER );
+            if ( mediaObject != null ) {
+                mediaObject.setIsSeekable( false );
+                new Handler( Looper.getMainLooper() ).post( new Runnable() {
+                    @Override
+                    public void run() {
+                        for ( Map.Entry<String,PlayStatusListener> playStatusListener : playStatusListeners
+                                .entrySet() ) {
+                            playStatusListener.getValue()
+                                    .onPlayStatusChanged( PlayStatusListener.STATUS_NOT_SUPPORT_LISTENER );
+                        }
                     }
-                }
-            } );
+                } );
+            }
         }
     }
+
 
     //Control de reproducción del video en la pantalla remota
     @Override
@@ -621,10 +626,6 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
         switch( playState ) {
             case Playing:
                 log( "PlayStateStatus: playing" );
-                for ( Map.Entry<String,PlayStatusListener> playStatusListener : playStatusListeners.entrySet() ) {
-                    playStatusListener.getValue()
-                            .onPlayStatusChanged( PlayStatusListener.STATUS_START_PLAYING );
-                }
                 break;
 
             case Finished:
@@ -655,6 +656,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                     playStatusListener.getValue()
                             .onPlayStatusChanged( PlayStatusListener.STATUS_PAUSED );
                 }
+                statusStartPlayingFired = true;
                 break;
 
             case Unknown:

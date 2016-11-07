@@ -178,20 +178,24 @@ public class ConnectableDevice implements DeviceServiceListener {
      * @param service DeviceService to be added
      */
     public void addService( DeviceService service ) {
-        final List<String> added = getMismatchCapabilities( service.getCapabilities(), getCapabilities() );
+        try {
+            final List<String> added = getMismatchCapabilities( service.getCapabilities(), getCapabilities() );
 
-        service.setListener( this );
+            service.setListener( this );
 
-        Util.runOnUI( new Runnable() {
+            Util.runOnUI( new Runnable() {
 
-            @Override
-            public void run() {
-                for ( ConnectableDeviceListener listener : listeners )
-                    listener.onCapabilityUpdated( ConnectableDevice.this, added, new ArrayList<String>() );
-            }
-        } );
+                @Override
+                public void run() {
+                    for ( ConnectableDeviceListener listener : listeners )
+                        listener.onCapabilityUpdated( ConnectableDevice.this, added, new ArrayList<String>() );
+                }
+            } );
 
-        services.put( service.getServiceName(), service );
+            services.put( service.getServiceName(), service );
+        } catch ( Exception e ) {
+
+        }
     }
 
     /**

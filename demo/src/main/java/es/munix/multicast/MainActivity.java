@@ -73,12 +73,12 @@ public class MainActivity extends AppCompatActivity implements CastListener, Pla
 
     @Override
     public void onPlayStatusChanged( int playStatus ) {
-        videoButton.setVisibility( View.VISIBLE );
-        loader.setVisibility( View.GONE );
-
         switch( playStatus ) {
             case STATUS_START_PLAYING:
                 videoButton.setText( "Detener video" );
+                Log.i( "MAIN", "Start cast controls activity" );
+                videoButton.setVisibility( View.VISIBLE );
+                loader.setVisibility( View.GONE );
                 CastManager.getInstance()
                         .startControlsActivity( this, CastControlsActivity.class ); //Puedes overridear esta actividad para tener algún control extra
                 break;

@@ -3,6 +3,7 @@ package es.munix.multidisplaycast;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -44,10 +45,6 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_cast_controls );
 
-        mediaObject = CastManager.getInstance().getMediaObject();
-        if ( mediaObject == null ) {
-            finish();
-        }
         setViews();
         paintInterface();
     }
@@ -76,7 +73,22 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
         volume.setOnClickListener( this );
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if ( CastManager.getInstance()
+                .getMediaObject() == null || TextUtils.isEmpty( CastManager.getInstance()
+                .getMediaObject()
+                .getTitle() ) ) {
+            finish();
+        }
+    }
+
     private void paintInterface() {
+        mediaObject = CastManager.getInstance().getMediaObject();
+        if ( mediaObject == null ) {
+            finish();
+        }
         titleTextView.setText( mediaObject.getTitle() );
         subtitleTextView.setText( mediaObject.getSubtitle() );
         Glide.with( this ).load( mediaObject.getImage() ).into( pictureImageView );
