@@ -17,4 +17,10 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="MultiCast.Toolbar.Transparent"
+           parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
 </resources>

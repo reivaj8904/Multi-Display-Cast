@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape android:shape="oval">
-            <solid android:color="@color/castPrimaryColor"/>
-        </shape>
-    </item>
-</layer-list>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/shape_buttons_pressed" android:state_pressed="true"/>
+    <item android:drawable="@drawable/shape_buttons_pressed" android:state_focused="true"/>
+    <item android:drawable="@drawable/shape_buttons_normal"/>
+</selector>

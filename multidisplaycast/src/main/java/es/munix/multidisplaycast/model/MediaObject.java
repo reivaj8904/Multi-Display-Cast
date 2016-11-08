@@ -14,6 +14,7 @@ public class MediaObject {
     private Boolean isSeekable = true;
     private int currentVolume;
     private Boolean canChangeVolume = true;
+    private Boolean canFastForwart = false;
 
     public MediaObject( String title, String subtitle, String image, String mime, String url ) {
         this.title = title;
@@ -22,6 +23,15 @@ public class MediaObject {
         this.mime = mime;
         this.url = url;
     }
+
+    public Boolean getCanFastForwart() {
+        return canFastForwart;
+    }
+
+    public void setCanFastForwart( Boolean canFastForwart ) {
+        this.canFastForwart = canFastForwart;
+    }
+
 
     public int getCurrentVolume() {
         return currentVolume;

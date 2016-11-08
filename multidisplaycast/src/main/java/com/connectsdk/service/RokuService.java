@@ -645,8 +645,6 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        Log.v( "Roku", "PlayOnRoku uri " + uri );
-
         ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, "", responseListener );
         request.send();
     }

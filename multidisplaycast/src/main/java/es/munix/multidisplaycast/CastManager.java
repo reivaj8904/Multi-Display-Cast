@@ -332,6 +332,8 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
                             mediaObject = new MediaObject( title, subtitle, icon, mimeType, url );
                             mediaObject.setCanChangeVolume( connectableDevice.hasCapability( VolumeControl.Volume_Set ) );
+                            mediaObject.setCanFastForwart( connectableDevice.hasCapability( MediaControl.FastForward ) );
+
                             if ( mediaObject.getCanChangeVolume() ) {
                                 connectableDevice.getCapability( VolumeControl.class )
                                         .getVolume( new VolumeControl.VolumeListener() {
@@ -449,6 +451,22 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                     }
                 }
             } );
+        }
+    }
+
+    public void rewind() {
+        if ( isConnected() && mMediaControl != null ) {
+            isPaused = false;
+            togglePause();
+            mMediaControl.rewind( null );
+        }
+    }
+
+    public void fastForward() {
+        if ( isConnected() && mMediaControl != null ) {
+            isPaused = false;
+            togglePause();
+            mMediaControl.fastForward( null );
         }
     }
 

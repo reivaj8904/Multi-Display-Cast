@@ -3,7 +3,9 @@ package es.munix.multidisplaycast;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -32,6 +34,8 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
     private View fadeBar;
     private View positionLayer;
     private View stop;
+    private View prev;
+    private View next;
     private ImageView play;
     private View volume;
     private View volumeLayer;
@@ -44,7 +48,10 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
     public void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_cast_controls );
-
+        setSupportActionBar( (Toolbar) findViewById( R.id.toolbar ) );
+        getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+        getSupportActionBar().setDisplayShowHomeEnabled( true );
+        getSupportActionBar().setTitle( null );
         setViews();
         paintInterface();
     }
@@ -60,6 +67,8 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
         fadeBar = findViewById( R.id.fadeBar );
 
         stop = findViewById( R.id.stop );
+        prev = findViewById( R.id.prev );
+        next = findViewById( R.id.next );
         play = (ImageView) findViewById( R.id.play );
         volume = findViewById( R.id.volume );
         volumeLayer = findViewById( R.id.volumeLayer );
@@ -71,6 +80,8 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
         stop.setOnClickListener( this );
         play.setOnClickListener( this );
         volume.setOnClickListener( this );
+        prev.setOnClickListener( this );
+        next.setOnClickListener( this );
     }
 
     @Override
@@ -104,6 +115,22 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
         } else {
             volumeBarControl.setProgress( mediaObject.getCurrentVolume() );
         }
+
+        if ( mediaObject.getCanFastForwart() ) {
+            prev.setVisibility( View.VISIBLE );
+            next.setVisibility( View.VISIBLE );
+        } else {
+            prev.setOnClickListener( null );
+            next.setOnClickListener( null );
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item ) {
+        if ( item.getItemId() == android.R.id.home ) {
+            finish();
+        }
+        return super.onOptionsItemSelected( item );
     }
 
     @Override
@@ -222,6 +249,10 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
 
         if ( id == R.id.stop ) {
             CastManager.getInstance().stop();
+        } else if ( id == R.id.prev ) {
+            CastManager.getInstance().rewind();
+        } else if ( id == R.id.next ) {
+            CastManager.getInstance().fastForward();
         } else if ( id == R.id.play ) {
             CastManager.getInstance().togglePause();
         } else if ( id == R.id.volume ) {
