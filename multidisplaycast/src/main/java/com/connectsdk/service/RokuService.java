@@ -520,8 +520,15 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
     @Override
     public void stop( ResponseListener<Object> listener ) {
-        String action = null;
+        /*String action = null;
         String param = "input?a=sto";
+
+        String uri = requestURL( action, param );
+
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
+        request.send();*/
+        String action = "keypress";
+        String param = "Home";
 
         String uri = requestURL( action, param );
 
@@ -625,19 +632,22 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
         if ( mimeType.contains( "image" ) ) {
             param = String.format( "15985?t=p&u=%s&tr=crossfade", HttpMessage.encode( url ) );
         } else if ( mimeType.contains( "video" ) ) {
-            param = String.format( "15985?t=v&u=%s&k=(null)&videoName=%s&videoFormat=%s", HttpMessage
-                    .encode( url ), TextUtils.isEmpty( title ) ? "(null)" : HttpMessage.encode( title ), HttpMessage
-                    .encode( mediaFormat ) );
+            param = String.format( "15985?t=v&u=%s&k=%s&videoName=%s&videoFormat=%s&h=null", HttpMessage
+                    .encode( url ), TextUtils.isEmpty( iconSrc ) ? "(null)" : HttpMessage.encode( iconSrc ), TextUtils
+                    .isEmpty( title ) ? "(null)" : HttpMessage.encode( title ), HttpMessage.encode( mediaFormat ) );
         } else { // if (mimeType.contains("audio")) {
-            param = String.format( "15985?t=a&u=%s&k=(null)&songname=%s&artistname=%s&songformat=%s&albumarturl=%s", HttpMessage
-                    .encode( url ), TextUtils.isEmpty( title ) ? "(null)" : HttpMessage.encode( title ), TextUtils
-                    .isEmpty( description ) ? "(null)" : HttpMessage.encode( description ), HttpMessage
-                    .encode( mediaFormat ), TextUtils.isEmpty( iconSrc ) ? "(null)" : HttpMessage.encode( iconSrc ) );
+            param = String.format( "15985?t=a&u=%s&k=%s&songname=%s&artistname=%s&songformat=%s&albumarturl=%s&h=null", HttpMessage
+                    .encode( url ), TextUtils.isEmpty( iconSrc ) ? "(null)" : HttpMessage.encode( iconSrc ), TextUtils
+                    .isEmpty( title ) ? "(null)" : HttpMessage.encode( title ), TextUtils.isEmpty( description ) ? "(null)" : HttpMessage
+                    .encode( description ), HttpMessage.encode( mediaFormat ), TextUtils.isEmpty( iconSrc ) ? "(null)" : HttpMessage
+                    .encode( iconSrc ) );
         }
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, responseListener );
+        Log.v( "Roku", "PlayOnRoku uri " + uri );
+
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, "", responseListener );
         request.send();
     }
 
