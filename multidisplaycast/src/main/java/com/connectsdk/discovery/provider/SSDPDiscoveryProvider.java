@@ -395,8 +395,8 @@ public class SSDPDiscoveryProvider implements DiscoveryProvider {
                     if ( hasServices ) {
                         final ServiceDescription service = discoveredServices.get( uuid );
 
-                        if ( service != null && !device.modelName.equals( "Eureka Dongle" ) && !device.manufacturer
-                                .contains( "Google" ) ) {
+                        if ( service != null && ( ( device.modelName != null && !device.modelName.equals( "Eureka Dongle" ) ) && ( device.manufacturer != null && !device.manufacturer
+                                .contains( "Google" ) ) ) ) {
                             service.setServiceFilter( serviceFilter );
                             service.setFriendlyName( device.friendlyName );
                             service.setModelName( device.modelName );
