@@ -108,17 +108,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     }
 
     public void setDiscoveryManager() {
-        if ( discoveryManager == null ) {
-            discoveryManager = DiscoveryManager.getInstance();
-            DiscoveryManager.getInstance().registerDefaultDeviceTypes();
-            discoveryManager.setPairingLevel( DiscoveryManager.PairingLevel.ON );
-            discoveryManager.addListener( this );
-            discoveryManager.start();
-        } else {
-            discoveryManager.addListener( this );
-            discoveryManager.start();
-            calculateMenuVisibility();
-        }
+        setDiscoveryManager( null );
     }
 
     //Version con CapabilityFilters
@@ -126,7 +116,9 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
         if ( discoveryManager == null ) {
             discoveryManager = DiscoveryManager.getInstance();
             DiscoveryManager.getInstance().registerDefaultDeviceTypes();
-            discoveryManager.setCapabilityFilters( filters );
+            if ( filters != null ) {
+                discoveryManager.setCapabilityFilters( filters );
+            }
             discoveryManager.setPairingLevel( DiscoveryManager.PairingLevel.ON );
             discoveryManager.addListener( this );
             discoveryManager.start();
@@ -559,6 +551,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     }
 
     public void onDestroy() {
+        stop();
         mediaObject = null;
         statusStartPlayingFired = false;
         NotificationsHelper.cancelNotification( context );
