@@ -120,7 +120,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
     public DLNAService( ServiceDescription serviceDescription, ServiceConfig serviceConfig, Context context, DLNAHttpServer dlnaServer ) {
         super( serviceDescription, serviceConfig );
         this.context = context;
-        SIDList = new HashMap<String,String>();
+        SIDList = new HashMap<>();
         updateControlURL();
         httpServer = dlnaServer;
     }
@@ -222,7 +222,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
 
     @Override
     public ServiceSubscription<MediaInfoListener> subscribeMediaInfo( MediaInfoListener listener ) {
-        URLServiceSubscription<MediaInfoListener> request = new URLServiceSubscription<MediaInfoListener>( this, "info", null, null );
+        URLServiceSubscription<MediaInfoListener> request = new URLServiceSubscription<>( this, "info", null, null );
         request.addListener( listener );
         addSubscription( request );
         return request;
@@ -253,7 +253,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
             public void onSuccess( Object response ) {
                 String method = "Play";
 
-                Map<String,String> parameters = new HashMap<String,String>();
+                Map<String,String> parameters = new HashMap<>();
                 parameters.put( "Speed", "1" );
 
                 String payload = getMessageXml( AV_TRANSPORT_URN, method, "0", parameters );
@@ -274,7 +274,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
                     }
                 };
 
-                ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( DLNAService.this, method, payload, playResponseListener );
+                ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( DLNAService.this, method, payload, playResponseListener );
                 request.send();
             }
 
@@ -291,7 +291,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
             return;
         }
 
-        Map<String,String> params = new LinkedHashMap<String,String>();
+        Map<String,String> params = new LinkedHashMap<>();
         try {
             params.put( "CurrentURI", encodeURL( url ) );
         } catch ( Exception e ) {
@@ -302,7 +302,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
 
         String payload = getMessageXml( AV_TRANSPORT_URN, method, instanceId, params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( DLNAService.this, method, payload, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( DLNAService.this, method, payload, responseListener );
         request.send();
     }
 
@@ -388,12 +388,12 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
         String method = "Play";
         String instanceId = "0";
 
-        Map<String,String> parameters = new LinkedHashMap<String,String>();
+        Map<String,String> parameters = new LinkedHashMap<>();
         parameters.put( "Speed", "1" );
 
         String payload = getMessageXml( AV_TRANSPORT_URN, method, instanceId, parameters );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, listener );
         request.send();
     }
 
@@ -404,7 +404,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
 
         String payload = getMessageXml( AV_TRANSPORT_URN, method, instanceId, null );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, listener );
         request.send();
     }
 
@@ -415,7 +415,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
 
         String payload = getMessageXml( AV_TRANSPORT_URN, method, instanceId, null );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, listener );
         request.send();
     }
 
@@ -450,7 +450,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
 
         String payload = getMessageXml( AV_TRANSPORT_URN, method, instanceId, null );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, listener );
         request.send();
     }
 
@@ -461,7 +461,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
 
         String payload = getMessageXml( AV_TRANSPORT_URN, method, instanceId, null );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, listener );
         request.send();
     }
 
@@ -492,12 +492,12 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
                 mode = "NORMAL";
         }
 
-        Map<String,String> parameters = new LinkedHashMap<String,String>();
+        Map<String,String> parameters = new LinkedHashMap<>();
         parameters.put( "NewPlayMode", mode );
 
         String payload = getMessageXml( AV_TRANSPORT_URN, method, instanceId, parameters );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, listener );
         request.send();
     }
 
@@ -532,7 +532,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, responseListener );
         request.send();
     }
 
@@ -593,13 +593,13 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
         String method = "Seek";
         String instanceId = "0";
 
-        Map<String,String> parameters = new LinkedHashMap<String,String>();
+        Map<String,String> parameters = new LinkedHashMap<>();
         parameters.put( "Unit", unit );
         parameters.put( "Target", target );
 
         String payload = getMessageXml( AV_TRANSPORT_URN, method, instanceId, parameters );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, listener );
         request.send();
     }
 
@@ -828,7 +828,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
 
     @Override
     protected void updateCapabilities() {
-        List<String> capabilities = new ArrayList<String>();
+        List<String> capabilities = new ArrayList<>();
 
         capabilities.add( Display_Image );
         capabilities.add( Play_Video );
@@ -956,13 +956,13 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, responseListener );
         request.send();
     }
 
     @Override
     public ServiceSubscription<PlayStateListener> subscribePlayState( PlayStateListener listener ) {
-        URLServiceSubscription<PlayStateListener> request = new URLServiceSubscription<MediaControl.PlayStateListener>( this, PLAY_STATE, null, null );
+        URLServiceSubscription<PlayStateListener> request = new URLServiceSubscription<>( this, PLAY_STATE, null, null );
         request.addListener( listener );
         addSubscription( request );
         return request;
@@ -1035,7 +1035,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, responseListener );
         request.send();
     }
 
@@ -1061,7 +1061,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, responseListener );
         request.send();
     }
 
@@ -1292,13 +1292,13 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
         String channel = "Master";
         String value = String.valueOf( (int) ( volume * 100 ) );
 
-        Map<String,String> params = new LinkedHashMap<String,String>();
+        Map<String,String> params = new LinkedHashMap<>();
         params.put( "Channel", channel );
         params.put( "DesiredVolume", value );
 
         String payload = getMessageXml( RENDERING_CONTROL_URN, method, instanceId, params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, listener );
         request.send();
     }
 
@@ -1308,7 +1308,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
         String instanceId = "0";
         String channel = "Master";
 
-        Map<String,String> params = new LinkedHashMap<String,String>();
+        Map<String,String> params = new LinkedHashMap<>();
         params.put( "Channel", channel );
 
         String payload = getMessageXml( RENDERING_CONTROL_URN, method, instanceId, params );
@@ -1336,7 +1336,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
             }
         };
 
-        ServiceCommand<VolumeListener> request = new ServiceCommand<VolumeListener>( this, method, payload, responseListener );
+        ServiceCommand<VolumeListener> request = new ServiceCommand<>( this, method, payload, responseListener );
         request.send();
     }
 
@@ -1347,13 +1347,13 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
         String channel = "Master";
         int muteStatus = ( isMute ) ? 1 : 0;
 
-        Map<String,String> params = new LinkedHashMap<String,String>();
+        Map<String,String> params = new LinkedHashMap<>();
         params.put( "Channel", channel );
         params.put( "DesiredMute", String.valueOf( muteStatus ) );
 
         String payload = getMessageXml( RENDERING_CONTROL_URN, method, instanceId, params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, listener );
         request.send();
     }
 
@@ -1363,7 +1363,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
         String instanceId = "0";
         String channel = "Master";
 
-        Map<String,String> params = new LinkedHashMap<String,String>();
+        Map<String,String> params = new LinkedHashMap<>();
         params.put( "Channel", channel );
 
         String payload = getMessageXml( RENDERING_CONTROL_URN, method, instanceId, params );
@@ -1384,13 +1384,13 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, method, payload, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, method, payload, responseListener );
         request.send();
     }
 
     @Override
     public ServiceSubscription<VolumeListener> subscribeVolume( VolumeListener listener ) {
-        URLServiceSubscription<VolumeListener> request = new URLServiceSubscription<VolumeListener>( this, "volume", null, null );
+        URLServiceSubscription<VolumeListener> request = new URLServiceSubscription<>( this, "volume", null, null );
         request.addListener( listener );
         addSubscription( request );
         return request;
@@ -1398,7 +1398,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
 
     @Override
     public ServiceSubscription<MuteListener> subscribeMute( MuteListener listener ) {
-        URLServiceSubscription<MuteListener> request = new URLServiceSubscription<MuteListener>( this, "mute", null, null );
+        URLServiceSubscription<MuteListener> request = new URLServiceSubscription<>( this, "mute", null, null );
         request.addListener( listener );
         addSubscription( request );
         return request;

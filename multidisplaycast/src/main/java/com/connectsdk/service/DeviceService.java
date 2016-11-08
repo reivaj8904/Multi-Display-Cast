@@ -74,7 +74,7 @@ public class DeviceService implements DeviceServiceReachabilityListener, Service
     public static final String KEY_CLASS = "class";
     public static final String KEY_CONFIG = "config";
     public static final String KEY_DESC = "description";
-    public SparseArray<ServiceCommand<? extends Object>> requests = new SparseArray<ServiceCommand<? extends Object>>();
+    public SparseArray<ServiceCommand<? extends Object>> requests = new SparseArray<>();
     protected DeviceServiceReachability mServiceReachability;
     protected boolean connected = false;
     // @cond INTERNAL
@@ -98,7 +98,7 @@ public class DeviceService implements DeviceServiceReachabilityListener, Service
         this.serviceDescription = serviceDescription;
         this.serviceConfig = serviceConfig;
 
-        mCapabilities = new ArrayList<String>();
+        mCapabilities = new ArrayList<>();
 
         updateCapabilities();
     }
@@ -106,7 +106,7 @@ public class DeviceService implements DeviceServiceReachabilityListener, Service
     public DeviceService( ServiceConfig serviceConfig ) {
         this.serviceConfig = serviceConfig;
 
-        mCapabilities = new ArrayList<String>();
+        mCapabilities = new ArrayList<>();
 
         updateCapabilities();
     }
@@ -315,14 +315,14 @@ public class DeviceService implements DeviceServiceReachabilityListener, Service
 
         mCapabilities = newCapabilities;
 
-        List<String> _lostCapabilities = new ArrayList<String>();
+        List<String> _lostCapabilities = new ArrayList<>();
 
         for ( String capability : oldCapabilities ) {
             if ( !newCapabilities.contains( capability ) )
                 _lostCapabilities.add( capability );
         }
 
-        List<String> _addedCapabilities = new ArrayList<String>();
+        List<String> _addedCapabilities = new ArrayList<>();
 
         for ( String capability : newCapabilities ) {
             if ( !oldCapabilities.contains( capability ) )
@@ -535,7 +535,7 @@ public class DeviceService implements DeviceServiceReachabilityListener, Service
 
             @Override
             public void run() {
-                List<String> added = new ArrayList<String>();
+                List<String> added = new ArrayList<>();
                 added.add( capability );
 
                 if ( listener != null )
@@ -580,7 +580,7 @@ public class DeviceService implements DeviceServiceReachabilityListener, Service
 
             @Override
             public void run() {
-                List<String> removed = new ArrayList<String>();
+                List<String> removed = new ArrayList<>();
                 removed.add( capability );
 
                 if ( listener != null )

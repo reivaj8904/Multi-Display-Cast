@@ -79,7 +79,7 @@ public class ConnectableDevice implements DeviceServiceListener {
     public static final String KEY_LAST_DETECTED = "lastDetection";
     public static final String KEY_SERVICES = "services";
     public boolean featuresReady = false;
-    CopyOnWriteArrayList<ConnectableDeviceListener> listeners = new CopyOnWriteArrayList<ConnectableDeviceListener>();
+    CopyOnWriteArrayList<ConnectableDeviceListener> listeners = new CopyOnWriteArrayList<>();
     Map<String,DeviceService> services;
     private String ipAddress;
     private String friendlyName;
@@ -93,7 +93,7 @@ public class ConnectableDevice implements DeviceServiceListener {
     private ServiceDescription serviceDescription;
 
     public ConnectableDevice() {
-        services = new ConcurrentHashMap<String,DeviceService>();
+        services = new ConcurrentHashMap<>();
     }
 
     public ConnectableDevice( String ipAddress, String friendlyName, String modelName, String modelNumber ) {
@@ -235,7 +235,7 @@ public class ConnectableDevice implements DeviceServiceListener {
     }
 
     private synchronized List<String> getMismatchCapabilities( List<String> capabilities, List<String> allCapabilities ) {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         for ( String cap : capabilities ) {
             if ( !allCapabilities.contains( cap ) ) {
@@ -314,7 +314,7 @@ public class ConnectableDevice implements DeviceServiceListener {
      */
     @Deprecated
     public void setListener( ConnectableDeviceListener listener ) {
-        listeners = new CopyOnWriteArrayList<ConnectableDeviceListener>();
+        listeners = new CopyOnWriteArrayList<>();
 
         if ( listener != null )
             listeners.add( listener );
@@ -421,7 +421,7 @@ public class ConnectableDevice implements DeviceServiceListener {
      * A combined list of all capabilities that are supported among the detected DeviceServices.
      */
     public synchronized List<String> getCapabilities() {
-        List<String> caps = new ArrayList<String>();
+        List<String> caps = new ArrayList<>();
 
         for ( DeviceService service : services.values() ) {
             for ( String capability : service.getCapabilities() ) {

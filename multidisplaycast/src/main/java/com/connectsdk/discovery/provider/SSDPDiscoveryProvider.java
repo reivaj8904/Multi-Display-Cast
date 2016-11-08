@@ -59,8 +59,8 @@ public class SSDPDiscoveryProvider implements DiscoveryProvider {
     Context context;
 
     boolean needToStartSearch = false;
-    ConcurrentHashMap<String,ServiceDescription> foundServices = new ConcurrentHashMap<String,ServiceDescription>();
-    ConcurrentHashMap<String,ServiceDescription> discoveredServices = new ConcurrentHashMap<String,ServiceDescription>();
+    ConcurrentHashMap<String,ServiceDescription> foundServices = new ConcurrentHashMap<>();
+    ConcurrentHashMap<String,ServiceDescription> discoveredServices = new ConcurrentHashMap<>();
     List<DiscoveryFilter> serviceFilters;
     boolean isRunning = false;
     private CopyOnWriteArrayList<DiscoveryProviderListener> serviceListeners;
@@ -108,8 +108,8 @@ public class SSDPDiscoveryProvider implements DiscoveryProvider {
 
         uuidReg = Pattern.compile( "(?<=uuid:)(.+?)(?=(::)|$)" );
 
-        serviceListeners = new CopyOnWriteArrayList<DiscoveryProviderListener>();
-        serviceFilters = new CopyOnWriteArrayList<DiscoveryFilter>();
+        serviceListeners = new CopyOnWriteArrayList<>();
+        serviceFilters = new CopyOnWriteArrayList<>();
     }
 
     private void openSocket() {
@@ -165,7 +165,7 @@ public class SSDPDiscoveryProvider implements DiscoveryProvider {
     }
 
     public void sendSearch() {
-        List<String> killKeys = new ArrayList<String>();
+        List<String> killKeys = new ArrayList<>();
 
         long killPoint = new Date().getTime() - TIMEOUT;
 
@@ -465,7 +465,7 @@ public class SSDPDiscoveryProvider implements DiscoveryProvider {
     }
 
     public List<String> serviceIdsForFilter( String filter ) {
-        ArrayList<String> serviceIds = new ArrayList<String>();
+        ArrayList<String> serviceIds = new ArrayList<>();
 
         for ( DiscoveryFilter serviceFilter : serviceFilters ) {
             String ssdpFilter = serviceFilter.getServiceFilter();

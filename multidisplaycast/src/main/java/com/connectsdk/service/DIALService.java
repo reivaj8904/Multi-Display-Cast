@@ -55,7 +55,7 @@ public class DIALService extends DeviceService implements Launcher {
     public static final String ID = "DIAL";
     private static final String APP_NETFLIX = "Netflix";
 
-    private static List<String> registeredApps = new ArrayList<String>();
+    private static List<String> registeredApps = new ArrayList<>();
 
     static {
         registeredApps.add( "YouTube" );
@@ -139,7 +139,7 @@ public class DIALService extends DeviceService implements Launcher {
 
     @Override
     public void launchAppWithInfo( final AppInfo appInfo, Object params, final AppLaunchListener listener ) {
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( getCommandProcessor(), requestURL( appInfo
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( getCommandProcessor(), requestURL( appInfo
                 .getId() ), params, new ResponseListener<Object>() {
             @Override
             public void onError( ServiceCommandError error ) {
@@ -184,7 +184,7 @@ public class DIALService extends DeviceService implements Launcher {
                 else
                     uri = requestURL( launchSession.getSessionId() );
 
-                ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( launchSession
+                ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( launchSession
                         .getService(), uri, null, listener );
                 command.setHttpMethod( ServiceCommand.TYPE_DEL );
                 command.send();
@@ -291,7 +291,7 @@ public class DIALService extends DeviceService implements Launcher {
 
         String uri = requestURL( appName );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( getCommandProcessor(), uri, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( getCommandProcessor(), uri, null, responseListener );
         request.setHttpMethod( ServiceCommand.TYPE_GET );
 
         request.send();
@@ -311,18 +311,18 @@ public class DIALService extends DeviceService implements Launcher {
     public ServiceSubscription<AppInfoListener> subscribeRunningApp( AppInfoListener listener ) {
         Util.postError( listener, ServiceCommandError.notSupported() );
 
-        return new NotSupportedServiceSubscription<AppInfoListener>();
+        return new NotSupportedServiceSubscription<>();
     }
 
     @Override
     public void getAppState( LaunchSession launchSession, AppStateListener listener ) {
-        // TODO Auto-generated method stub
+
 
     }
 
     @Override
     public ServiceSubscription<AppStateListener> subscribeAppState( LaunchSession launchSession, com.connectsdk.service.capability.Launcher.AppStateListener listener ) {
-        // TODO Auto-generated method stub
+
         return null;
     }
 
@@ -451,7 +451,7 @@ public class DIALService extends DeviceService implements Launcher {
 
     @Override
     protected void updateCapabilities() {
-        List<String> capabilities = new ArrayList<String>();
+        List<String> capabilities = new ArrayList<>();
 
         capabilities.add( Application );
         capabilities.add( Application_Params );
@@ -464,7 +464,7 @@ public class DIALService extends DeviceService implements Launcher {
     private void hasApplication( String appID, ResponseListener<Object> listener ) {
         String uri = requestURL( appID );
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( getCommandProcessor(), uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( getCommandProcessor(), uri, null, listener );
         command.setHttpMethod( ServiceCommand.TYPE_GET );
         command.send();
     }

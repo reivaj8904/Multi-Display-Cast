@@ -58,7 +58,7 @@ public class WebOSTVServiceSocketClient extends WebSocketClient implements Servi
     static final String WEBOS_PAIRING_PIN = "PIN";
     static final String WEBOS_PAIRING_COMBINED = "COMBINED";
     static final int PORT = 3001;
-    public SparseArray<ServiceCommand<? extends Object>> requests = new SparseArray<ServiceCommand<? extends Object>>();
+    public SparseArray<ServiceCommand<? extends Object>> requests = new SparseArray<>();
     WebOSTVServiceSocketClientListener mListener;
     WebOSTVService mService;
     int nextRequestId = 1;
@@ -66,7 +66,7 @@ public class WebOSTVServiceSocketClient extends WebSocketClient implements Servi
     State state = State.INITIAL;
     JSONObject manifest;
     // Queue of commands that should be sent once register is complete
-    LinkedHashSet<ServiceCommand<ResponseListener<Object>>> commandQueue = new LinkedHashSet<ServiceCommand<ResponseListener<Object>>>();
+    LinkedHashSet<ServiceCommand<ResponseListener<Object>>> commandQueue = new LinkedHashSet<>();
     boolean mConnectSucceeded = false;
     Boolean mConnected;
 
@@ -410,7 +410,7 @@ public class WebOSTVServiceSocketClient extends WebSocketClient implements Servi
             e.printStackTrace();
         }
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, null, sendData, true, null );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, null, sendData, true, null );
         this.sendCommandImmediately( request );
     }
 
@@ -440,7 +440,7 @@ public class WebOSTVServiceSocketClient extends WebSocketClient implements Servi
 
         int dataId = this.nextRequestId++;
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( this, null, null, listener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( this, null, null, listener );
         command.setRequestId( dataId );
 
         JSONObject headers = new JSONObject();
@@ -521,7 +521,7 @@ public class WebOSTVServiceSocketClient extends WebSocketClient implements Servi
 
         int dataId = this.nextRequestId++;
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( this, null, null, listener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( this, null, null, listener );
         command.setRequestId( dataId );
 
         JSONObject headers = new JSONObject();
@@ -546,7 +546,7 @@ public class WebOSTVServiceSocketClient extends WebSocketClient implements Servi
         state = State.REGISTERED;
 
         if ( !commandQueue.isEmpty() ) {
-            LinkedHashSet<ServiceCommand<ResponseListener<Object>>> tempHashSet = new LinkedHashSet<ServiceCommand<ResponseListener<Object>>>( commandQueue );
+            LinkedHashSet<ServiceCommand<ResponseListener<Object>>> tempHashSet = new LinkedHashSet<>( commandQueue );
             for ( ServiceCommand<ResponseListener<Object>> command : tempHashSet ) {
                 Log.d( Util.T, "executing queued command for " + command.getTarget() );
 

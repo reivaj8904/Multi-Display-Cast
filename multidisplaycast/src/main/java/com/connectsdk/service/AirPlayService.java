@@ -110,23 +110,23 @@ public class AirPlayService extends DeviceService implements MediaPlayer, MediaC
 
     @Override
     public void play( ResponseListener<Object> listener ) {
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "value", "1.000000" );
 
         String uri = getRequestURL( "rate", params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
     @Override
     public void pause( ResponseListener<Object> listener ) {
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "value", "0.000000" );
 
         String uri = getRequestURL( "rate", params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -134,7 +134,7 @@ public class AirPlayService extends DeviceService implements MediaPlayer, MediaC
     public void stop( ResponseListener<Object> listener ) {
         String uri = getRequestURL( "stop" );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         // TODO This is temp fix for issue https://github.com/ConnectSDK/Connect-SDK-Android/issues/66
         request.send();
         request.send();
@@ -143,23 +143,23 @@ public class AirPlayService extends DeviceService implements MediaPlayer, MediaC
 
     @Override
     public void rewind( ResponseListener<Object> listener ) {
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "value", "-2.000000" );
 
         String uri = getRequestURL( "rate", params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
     @Override
     public void fastForward( ResponseListener<Object> listener ) {
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "value", "2.000000" );
 
         String uri = getRequestURL( "rate", params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -177,12 +177,12 @@ public class AirPlayService extends DeviceService implements MediaPlayer, MediaC
     public void seek( long position, ResponseListener<Object> listener ) {
         float pos = ( (float) position / 1000 );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "position", String.valueOf( pos ) );
 
         String uri = getRequestURL( "scrub", params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -290,7 +290,7 @@ public class AirPlayService extends DeviceService implements MediaPlayer, MediaC
 
         String uri = getRequestURL( "scrub" );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, responseListener );
         request.setHttpMethod( ServiceCommand.TYPE_GET );
         request.send();
     }
@@ -309,7 +309,7 @@ public class AirPlayService extends DeviceService implements MediaPlayer, MediaC
     private void getPlaybackInfo( ResponseListener<Object> listener ) {
         String uri = getRequestURL( "playback-info" );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.setHttpMethod( ServiceCommand.TYPE_GET );
         request.send();
     }
@@ -400,7 +400,7 @@ public class AirPlayService extends DeviceService implements MediaPlayer, MediaC
                     e.printStackTrace();
                 }
 
-                ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( AirPlayService.this, uri, payload, responseListener );
+                ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( AirPlayService.this, uri, payload, responseListener );
                 request.setHttpMethod( ServiceCommand.TYPE_PUT );
                 request.send();
             }
@@ -459,7 +459,7 @@ public class AirPlayService extends DeviceService implements MediaPlayer, MediaC
 
         payload = builder.toString();
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, payload, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, payload, responseListener );
         request.send();
     }
 
@@ -656,7 +656,7 @@ public class AirPlayService extends DeviceService implements MediaPlayer, MediaC
 
     @Override
     protected void updateCapabilities() {
-        List<String> capabilities = new ArrayList<String>();
+        List<String> capabilities = new ArrayList<>();
 
         capabilities.add( Display_Image );
         capabilities.add( Play_Video );

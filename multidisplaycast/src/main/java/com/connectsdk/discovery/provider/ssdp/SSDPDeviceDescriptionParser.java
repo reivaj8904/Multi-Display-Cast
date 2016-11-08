@@ -56,7 +56,7 @@ public class SSDPDeviceDescriptionParser extends DefaultHandler {
 
     public SSDPDeviceDescriptionParser( SSDPDevice device ) {
         this.device = device;
-        data = new HashMap<String,String>();
+        data = new HashMap<>();
     }
 
     @Override

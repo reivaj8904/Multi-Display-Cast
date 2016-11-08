@@ -35,7 +35,7 @@ public class DLNAHttpServer {
     CopyOnWriteArrayList<URLServiceSubscription<?>> subscriptions;
 
     public DLNAHttpServer() {
-        subscriptions = new CopyOnWriteArrayList<URLServiceSubscription<?>>();
+        subscriptions = new CopyOnWriteArrayList<>();
     }
 
     public synchronized void start() {
@@ -289,7 +289,7 @@ public class DLNAHttpServer {
     }
 
     public void setSubscriptions( List<URLServiceSubscription<?>> subscriptions ) {
-        this.subscriptions = new CopyOnWriteArrayList<URLServiceSubscription<?>>( subscriptions );
+        this.subscriptions = new CopyOnWriteArrayList<>( subscriptions );
     }
 
     public boolean isRunning() {

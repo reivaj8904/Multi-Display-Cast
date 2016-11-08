@@ -72,7 +72,7 @@ public class DLNAMediaInfoParser {
                 DLNAMediaInfoParser.getAlbum( str );
         String iconUrl = DLNAMediaInfoParser.getThumbnail( str );
 
-        ArrayList<ImageInfo> list = new ArrayList<ImageInfo>();
+        ArrayList<ImageInfo> list = new ArrayList<>();
         list.add( new ImageInfo( iconUrl ) );
         return new MediaInfo( url, mimeType, title, description, list );
     }
@@ -91,7 +91,7 @@ public class DLNAMediaInfoParser {
             iconUrl = baseUrl + iconUrl;
         }
 
-        ArrayList<ImageInfo> list = new ArrayList<ImageInfo>();
+        ArrayList<ImageInfo> list = new ArrayList<>();
         list.add( new ImageInfo( iconUrl ) );
         return new MediaInfo( url, mimeType, title, description, list );
     }

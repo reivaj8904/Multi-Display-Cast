@@ -72,7 +72,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
     public static final String ID = "Roku";
 
-    private static List<String> registeredApps = new ArrayList<String>();
+    private static List<String> registeredApps = new ArrayList<>();
 
     static {
         registeredApps.add( "YouTube" );
@@ -224,7 +224,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, targetURL, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, targetURL, null, responseListener );
         request.send();
     }
 
@@ -275,7 +275,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, responseListener );
         request.setHttpMethod( ServiceCommand.TYPE_GET );
         request.send();
     }
@@ -289,7 +289,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
     public ServiceSubscription<AppInfoListener> subscribeRunningApp( AppInfoListener listener ) {
         Util.postError( listener, ServiceCommandError.notSupported() );
 
-        return new NotSupportedServiceSubscription<AppInfoListener>();
+        return new NotSupportedServiceSubscription<>();
     }
 
     @Override
@@ -393,7 +393,6 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
                 }
             };
         } catch ( JSONException e ) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -417,7 +416,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -428,7 +427,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -439,7 +438,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -450,7 +449,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -461,7 +460,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -472,7 +471,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -483,7 +482,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -504,7 +503,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -515,7 +514,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -526,7 +525,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -537,7 +536,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -548,7 +547,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -638,7 +637,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, responseListener );
         request.send();
     }
 
@@ -717,7 +716,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
     public ServiceSubscription<TextInputStatusListener> subscribeTextInputStatus( TextInputStatusListener listener ) {
         Util.postError( listener, ServiceCommandError.notSupported() );
 
-        return new NotSupportedServiceSubscription<TextInputStatusListener>();
+        return new NotSupportedServiceSubscription<>();
     }
 
     @Override
@@ -730,13 +729,13 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
             @Override
             public void onSuccess( Object response ) {
-                // TODO Auto-generated method stub
+
 
             }
 
             @Override
             public void onError( ServiceCommandError error ) {
-                // TODO Auto-generated method stub
+
 
             }
         };
@@ -754,7 +753,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         Log.d( Util.T, "RokuService::send() | uri = " + uri );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -769,13 +768,13 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
             @Override
             public void onSuccess( Object response ) {
-                // TODO Auto-generated method stub
+
 
             }
 
             @Override
             public void onError( ServiceCommandError error ) {
-                // TODO Auto-generated method stub
+
 
             }
         };
@@ -785,7 +784,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -795,13 +794,13 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
             @Override
             public void onSuccess( Object response ) {
-                // TODO Auto-generated method stub
+
 
             }
 
             @Override
             public void onError( ServiceCommandError error ) {
-                // TODO Auto-generated method stub
+
 
             }
         };
@@ -811,7 +810,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
         String uri = requestURL( action, param );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, listener );
         request.send();
     }
 
@@ -879,7 +878,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
             @Override
             public void onSuccess( List<AppInfo> object ) {
-                List<String> appsToAdd = new ArrayList<String>();
+                List<String> appsToAdd = new ArrayList<>();
 
                 for ( String probe : registeredApps ) {
                     for ( AppInfo app : object ) {
@@ -897,7 +896,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
 
     @Override
     protected void updateCapabilities() {
-        List<String> capabilities = new ArrayList<String>();
+        List<String> capabilities = new ArrayList<>();
 
         capabilities.add( Up );
         capabilities.add( Down );

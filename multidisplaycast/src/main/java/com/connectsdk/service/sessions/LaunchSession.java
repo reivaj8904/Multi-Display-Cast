@@ -230,7 +230,7 @@ public class LaunchSession implements JSONSerializable, JSONDeserializable {
      */
     @Override
     public boolean equals( Object launchSession ) {
-        // TODO Auto-generated method stub
+
         return super.equals( launchSession );
     }
 

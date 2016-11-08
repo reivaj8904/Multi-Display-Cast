@@ -49,7 +49,7 @@ public class WebOSTVKeyboardInput {
         this.service = service;
         waiting = false;
 
-        toSend = new ArrayList<String>();
+        toSend = new ArrayList<>();
     }
 
     public void addToQueue( String input ) {
@@ -138,7 +138,7 @@ public class WebOSTVKeyboardInput {
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( service, uri, payload, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( service, uri, payload, true, responseListener );
         request.send();
     }
 
@@ -160,7 +160,7 @@ public class WebOSTVKeyboardInput {
             }
         };
 
-        URLServiceSubscription<TextInputStatusListener> subscription = new URLServiceSubscription<TextInputStatusListener>( service, KEYBOARD_INPUT, null, true, responseListener );
+        URLServiceSubscription<TextInputStatusListener> subscription = new URLServiceSubscription<>( service, KEYBOARD_INPUT, null, true, responseListener );
         subscription.send();
 
         return subscription;

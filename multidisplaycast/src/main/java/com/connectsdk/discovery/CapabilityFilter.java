@@ -73,7 +73,7 @@ public class CapabilityFilter {
     /**
      * List of capabilities required by this filter. This property is readonly -- use the addCapability or addCapabilities to build this object.
      */
-    public List<String> capabilities = new ArrayList<String>();
+    public List<String> capabilities = new ArrayList<>();
 
     /**
      * Create an empty CapabilityFilter.

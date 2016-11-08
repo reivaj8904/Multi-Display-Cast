@@ -65,7 +65,7 @@ public class SSDPDevice {
     //    List<Icon> iconList = new ArrayList<Icon>();
     public String locationXML;
     /* Optional. */
-    public List<Service> serviceList = new ArrayList<Service>();
+    public List<Service> serviceList = new ArrayList<>();
 
     public String ST;
     public String applicationURL;

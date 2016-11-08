@@ -52,15 +52,15 @@ public class CastDiscoveryProvider implements DiscoveryProvider {
     boolean isRunning = false;
     private MediaRouter mMediaRouter;
     private MediaRouteSelector mMediaRouteSelector;
-    private List<String> removedUUID = new CopyOnWriteArrayList<String>();
+    private List<String> removedUUID = new CopyOnWriteArrayList<>();
     private Timer removeRoutesTimer;
 
     public CastDiscoveryProvider( Context context ) {
         mMediaRouter = createMediaRouter( context );
         mMediaRouterCallback = new MediaRouterCallback();
 
-        foundServices = new ConcurrentHashMap<String,ServiceDescription>( 8, 0.75f, 2 );
-        serviceListeners = new CopyOnWriteArrayList<DiscoveryProviderListener>();
+        foundServices = new ConcurrentHashMap<>( 8, 0.75f, 2 );
+        serviceListeners = new CopyOnWriteArrayList<>();
     }
 
     protected MediaRouter createMediaRouter( Context context ) {

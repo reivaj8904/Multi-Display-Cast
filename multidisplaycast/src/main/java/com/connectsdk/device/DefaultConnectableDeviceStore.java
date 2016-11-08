@@ -102,8 +102,8 @@ public class DefaultConnectableDeviceStore implements ConnectableDeviceStore {
     // @cond INTERNAL
     private String fileFullPath;
 
-    private Map<String,JSONObject> storedDevices = new ConcurrentHashMap<String,JSONObject>();
-    private Map<String,ConnectableDevice> activeDevices = new ConcurrentHashMap<String,ConnectableDevice>();
+    private Map<String,JSONObject> storedDevices = new ConcurrentHashMap<>();
+    private Map<String,ConnectableDevice> activeDevices = new ConcurrentHashMap<>();
 
     private boolean waitToWrite = false;
 

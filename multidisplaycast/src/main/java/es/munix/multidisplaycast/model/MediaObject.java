@@ -23,14 +23,6 @@ public class MediaObject {
         this.url = url;
     }
 
-    public MediaObject() {
-        title = "";
-        subtitle = "";
-        image = "";
-        mime = "";
-        url = "";
-    }
-
     public int getCurrentVolume() {
         return currentVolume;
     }

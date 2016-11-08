@@ -139,8 +139,8 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
         if ( serviceDescription.getPort() != 8080 )
             serviceDescription.setPort( 8080 );
 
-        applications = new ArrayList<AppInfo>();
-        subscriptions = new ArrayList<URLServiceSubscription<?>>();
+        applications = new ArrayList<>();
+        subscriptions = new ArrayList<>();
 
         keyboardString = new StringBuilder();
 
@@ -309,12 +309,12 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String requestURL = getUDAPRequestURL( UDAP_PATH_PAIRING );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "showKey" );
 
         String httpMessage = getUDAPMessageBody( UDAP_API_PAIRING, params );
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( this, requestURL, httpMessage, responseListener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( this, requestURL, httpMessage, responseListener );
         command.send();
     }
 
@@ -338,12 +338,12 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String requestURL = getUDAPRequestURL( UDAP_PATH_PAIRING );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "CancelAuthKeyReq" );
 
         String httpMessage = getUDAPMessageBody( UDAP_API_PAIRING, params );
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( this, requestURL, httpMessage, responseListener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( this, requestURL, httpMessage, responseListener );
         command.send();
     }
 
@@ -377,27 +377,27 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String requestURL = getUDAPRequestURL( UDAP_PATH_PAIRING );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "hello" );
         params.put( "value", pairingKey );
         params.put( "port", String.valueOf( serviceDescription.getPort() ) );
 
         String httpMessage = getUDAPMessageBody( UDAP_API_PAIRING, params );
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( this, requestURL, httpMessage, responseListener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( this, requestURL, httpMessage, responseListener );
         command.send();
     }
 
     private void endPairing( ResponseListener<Object> listener ) {
         String requestURL = getUDAPRequestURL( UDAP_PATH_PAIRING );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "byebye" );
         params.put( "port", String.valueOf( serviceDescription.getPort() ) );
 
         String httpMessage = getUDAPMessageBody( UDAP_API_PAIRING, params );
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( this, requestURL, httpMessage, listener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( this, requestURL, httpMessage, listener );
         command.send();
     }
 
@@ -438,7 +438,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
         String uri = UDAP_PATH_APPTOAPP_DATA + appName;
         String requestURL = getUDAPRequestURL( uri );
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( this, requestURL, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( this, requestURL, null, responseListener );
         command.setHttpMethod( ServiceCommand.TYPE_GET );
         command.send();
     }
@@ -510,7 +510,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String requestURL = getUDAPRequestURL( UDAP_PATH_APPTOAPP_COMMAND );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "AppExecute" );
         params.put( "auid", auid );
         if ( appName != null ) {
@@ -522,7 +522,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String httpMessage = getUDAPMessageBody( UDAP_API_COMMAND, params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, requestURL, httpMessage, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, requestURL, httpMessage, responseListener );
         request.send();
     }
 
@@ -663,7 +663,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
                 String requestURL = getUDAPRequestURL( UDAP_PATH_APPTOAPP_COMMAND );
 
-                Map<String,String> params = new HashMap<String,String>();
+                Map<String,String> params = new HashMap<>();
                 params.put( "name", "SearchCMDPlaySDPContent" );
                 params.put( "content_type", "1" );
                 params.put( "conts_exec_type", "20" );
@@ -676,7 +676,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
                 String httpMessage = getUDAPMessageBody( UDAP_API_COMMAND, params );
 
-                ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( NetcastTVService.this, requestURL, httpMessage, responseListener );
+                ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( NetcastTVService.this, requestURL, httpMessage, responseListener );
                 request.send();
             }
 
@@ -696,7 +696,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String targetPath = getUDAPRequestURL( ROAP_PATH_APP_STORE );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "SearchCMDPlaySDPContent" );
         params.put( "content_type", "4" );
         params.put( "conts_exec_type", "" );
@@ -726,7 +726,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
                 Util.postError( listener, error );
             }
         };
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( this, targetPath, httpMessage, responseListener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( this, targetPath, httpMessage, responseListener );
         command.send();
     }
 
@@ -734,7 +734,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
     public void closeApp( LaunchSession launchSession, ResponseListener<Object> listener ) {
         String requestURL = getUDAPRequestURL( UDAP_PATH_APPTOAPP_COMMAND );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "AppTerminate" );
         params.put( "auid", launchSession.getAppId() );
         if ( launchSession.getAppName() != null )
@@ -742,8 +742,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String httpMessage = getUDAPMessageBody( UDAP_API_COMMAND, params );
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( launchSession
-                .getService(), requestURL, httpMessage, listener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( launchSession.getService(), requestURL, httpMessage, listener );
         command.send();
     }
 
@@ -767,7 +766,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String requestURL = getUDAPRequestURL( UDAP_PATH_DATA, TARGET_APPNUM_GET, String.valueOf( type ) );
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( this, requestURL, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( this, requestURL, null, responseListener );
         command.setHttpMethod( ServiceCommand.TYPE_GET );
         command.send();
     }
@@ -780,7 +779,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
                 String strObj = (String) response;
 
                 JSONArray applicationArray = parseApplicationsXmlToJSON( strObj );
-                List<AppInfo> appList = new ArrayList<AppInfo>();
+                List<AppInfo> appList = new ArrayList<>();
 
                 for ( int i = 0; i < applicationArray.length(); i++ ) {
                     try {
@@ -809,7 +808,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
         String requestURL = getUDAPRequestURL( UDAP_PATH_DATA, TARGET_APPLIST_GET, String.valueOf( type ), "0", String
                 .valueOf( number ) );
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( this, requestURL, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( this, requestURL, null, responseListener );
         command.setHttpMethod( ServiceCommand.TYPE_GET );
         command.send();
     }
@@ -879,7 +878,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
         // Do nothing - Not Supported
         Util.postError( listener, ServiceCommandError.notSupported() );
 
-        return new NotSupportedServiceSubscription<AppInfoListener>();
+        return new NotSupportedServiceSubscription<>();
     }
 
     @Override
@@ -913,7 +912,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( this, requestURL, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( this, requestURL, null, responseListener );
         command.setHttpMethod( ServiceCommand.TYPE_GET );
         command.send();
     }
@@ -957,7 +956,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
                     saxParser.parse( stream, parser );
 
                     JSONArray channelArray = parser.getJSONChannelArray();
-                    ArrayList<ChannelInfo> channelList = new ArrayList<ChannelInfo>();
+                    ArrayList<ChannelInfo> channelList = new ArrayList<>();
 
                     for ( int i = 0; i < channelArray.length(); i++ ) {
                         JSONObject rawData;
@@ -987,7 +986,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, requestURL, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, requestURL, null, responseListener );
         request.setHttpMethod( ServiceCommand.TYPE_GET );
         request.send();
     }
@@ -1010,7 +1009,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
             public void onSuccess( List<ChannelInfo> channelList ) {
                 String requestURL = getUDAPRequestURL( UDAP_PATH_COMMAND );
 
-                Map<String,String> params = new HashMap<String,String>();
+                Map<String,String> params = new HashMap<>();
 
                 for ( int i = 0; i < channelList.size(); i++ ) {
                     ChannelInfo ch = channelList.get( i );
@@ -1042,7 +1041,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
                 String httpMessage = getUDAPMessageBody( UDAP_API_COMMAND, params );
 
-                ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( NetcastTVService.this, requestURL, httpMessage, listener );
+                ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( NetcastTVService.this, requestURL, httpMessage, listener );
                 request.send();
             }
 
@@ -1097,7 +1096,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, requestURL, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, requestURL, null, responseListener );
         request.send();
     }
 
@@ -1105,7 +1104,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
     public ServiceSubscription<ChannelListener> subscribeCurrentChannel( final ChannelListener listener ) {
         getCurrentChannel( listener );    // This is for the initial Current TV Channel Info.
 
-        URLServiceSubscription<ChannelListener> request = new URLServiceSubscription<ChannelListener>( this, "ChannelChanged", null, null );
+        URLServiceSubscription<ChannelListener> request = new URLServiceSubscription<>( this, "ChannelChanged", null, null );
         request.setHttpMethod( ServiceCommand.TYPE_GET );
         request.addListener( listener );
         addSubscription( request );
@@ -1179,7 +1178,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String requestURL = getUDAPRequestURL( UDAP_PATH_DATA, TARGET_IS_3D );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, requestURL, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, requestURL, null, responseListener );
         request.setHttpMethod( ServiceCommand.TYPE_GET );
         request.send();
     }
@@ -1188,7 +1187,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
     public ServiceSubscription<State3DModeListener> subscribe3DEnabled( final State3DModeListener listener ) {
         get3DEnabled( listener );
 
-        URLServiceSubscription<State3DModeListener> request = new URLServiceSubscription<State3DModeListener>( this, TARGET_3D_MODE, null, null );
+        URLServiceSubscription<State3DModeListener> request = new URLServiceSubscription<>( this, TARGET_3D_MODE, null, null );
         request.setHttpMethod( ServiceCommand.TYPE_GET );
         request.addListener( listener );
 
@@ -1324,7 +1323,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String requestURL = getUDAPRequestURL( UDAP_PATH_DATA, TARGET_VOLUME_INFO );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, requestURL, null, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, requestURL, null, responseListener );
         request.setHttpMethod( ServiceCommand.TYPE_GET );
         request.send();
     }
@@ -1646,14 +1645,14 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
     private void setMouseCursorVisible( boolean visible, ResponseListener<Object> listener ) {
         String requestURL = getUDAPRequestURL( UDAP_PATH_EVENT );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "CursorVisible" );
         params.put( "value", visible ? "true" : "false" );
         params.put( "mode", "auto" );
 
         String httpMessage = getUDAPMessageBody( UDAP_API_EVENT, params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, requestURL, httpMessage, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, requestURL, httpMessage, listener );
         request.send();
     }
 
@@ -1699,12 +1698,12 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String requestURL = getUDAPRequestURL( UDAP_PATH_COMMAND );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "HandleTouchClick" );
 
         String httpMessage = getUDAPMessageBody( UDAP_API_COMMAND, params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, requestURL, httpMessage, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, requestURL, httpMessage, responseListener );
         request.send();
     }
 
@@ -1725,7 +1724,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
         int x = (int) mMouseDistance.x;
         int y = (int) mMouseDistance.y;
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "HandleTouchMove" );
         params.put( "x", String.valueOf( x ) );
         params.put( "y", String.valueOf( y ) );
@@ -1754,7 +1753,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String httpMessage = getUDAPMessageBody( UDAP_API_COMMAND, params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, requestURL, httpMessage, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, requestURL, httpMessage, responseListener );
         request.send();
     }
 
@@ -1780,7 +1779,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String requestURL = getUDAPRequestURL( UDAP_PATH_COMMAND );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "HandleTouchWheel" );
         if ( dy > 0 )
             params.put( "value", "up" );
@@ -1789,7 +1788,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String httpMessage = getUDAPMessageBody( UDAP_API_COMMAND, params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, requestURL, httpMessage, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, requestURL, httpMessage, responseListener );
         request.send();
     }
 
@@ -1815,7 +1814,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
     public ServiceSubscription<TextInputStatusListener> subscribeTextInputStatus( final TextInputStatusListener listener ) {
         keyboardString = new StringBuilder();
 
-        URLServiceSubscription<TextInputStatusListener> request = new URLServiceSubscription<TextInputStatusListener>( this, "KeyboardVisible", null, null );
+        URLServiceSubscription<TextInputStatusListener> request = new URLServiceSubscription<>( this, "KeyboardVisible", null, null );
         request.addListener( listener );
 
         addSubscription( request );
@@ -1876,14 +1875,14 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
         String requestURL = getUDAPRequestURL( UDAP_PATH_EVENT );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "TextEdited" );
         params.put( "state", state );
         params.put( "value", buffer );
 
         String httpMessage = getUDAPMessageBody( UDAP_API_EVENT, params );
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, requestURL, httpMessage, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, requestURL, httpMessage, responseListener );
         request.send();
     }
 
@@ -2035,7 +2034,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
     public String getHttpMessageForHandleKeyInput( final int keycode ) {
         String strKeycode = String.valueOf( keycode );
 
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap<>();
         params.put( "name", "HandleKeyInput" );
         params.put( "value", strKeycode );
 
@@ -2100,7 +2099,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
                 String requestURL = getUDAPRequestURL( UDAP_PATH_COMMAND );
                 String httpMessage = getHttpMessageForHandleKeyInput( keycode );
 
-                ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( NetcastTVService.this, requestURL, httpMessage, listener );
+                ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( NetcastTVService.this, requestURL, httpMessage, listener );
                 request.send();
             }
 
@@ -2251,7 +2250,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
 
     @Override
     protected void updateCapabilities() {
-        List<String> capabilities = new ArrayList<String>();
+        List<String> capabilities = new ArrayList<>();
 
         if ( DiscoveryManager.getInstance().getPairingLevel() == PairingLevel.ON ) {
             Collections.addAll( capabilities, TextInputControl.Capabilities );

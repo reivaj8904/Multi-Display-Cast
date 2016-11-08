@@ -214,8 +214,8 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
 
         pairingType = PairingType.FIRST_SCREEN;
 
-        mAppToAppIdMappings = new ConcurrentHashMap<String,String>();
-        mWebAppSessions = new ConcurrentHashMap<String,WebOSWebAppSession>();
+        mAppToAppIdMappings = new ConcurrentHashMap<>();
+        mWebAppSessions = new ConcurrentHashMap<>();
     }
 
     public static DiscoveryFilter discoveryFilter() {
@@ -432,7 +432,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, payload, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, payload, true, responseListener );
         request.send();
     }
 
@@ -469,7 +469,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             e.printStackTrace();
         }
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, payload, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, payload, true, responseListener );
         request.send();
     }
 
@@ -575,8 +575,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             e.printStackTrace();
         }
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( launchSession
-                .getService(), uri, payload, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( launchSession.getService(), uri, payload, true, listener );
         request.send();
     }
 
@@ -593,7 +592,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
                     JSONObject jsonObj = (JSONObject) response;
 
                     JSONArray apps = (JSONArray) jsonObj.get( "apps" );
-                    List<AppInfo> appList = new ArrayList<AppInfo>();
+                    List<AppInfo> appList = new ArrayList<>();
 
                     for ( int i = 0; i < apps.length(); i++ ) {
                         final JSONObject appObj = apps.getJSONObject( i );
@@ -619,7 +618,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, responseListener );
         request.send();
     }
 
@@ -647,9 +646,9 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         };
 
         if ( isSubscription )
-            request = new URLServiceSubscription<AppInfoListener>( this, FOREGROUND_APP, null, true, responseListener );
+            request = new URLServiceSubscription<>( this, FOREGROUND_APP, null, true, responseListener );
         else
-            request = new ServiceCommand<AppInfoListener>( this, FOREGROUND_APP, null, true, responseListener );
+            request = new ServiceCommand<>( this, FOREGROUND_APP, null, true, responseListener );
 
         request.send();
 
@@ -697,9 +696,9 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         };
 
         if ( subscription ) {
-            request = new URLServiceSubscription<Launcher.AppStateListener>( this, APP_STATE, params, true, responseListener );
+            request = new URLServiceSubscription<>( this, APP_STATE, params, true, responseListener );
         } else {
-            request = new ServiceCommand<Launcher.AppStateListener>( this, APP_STATE, params, true, responseListener );
+            request = new ServiceCommand<>( this, APP_STATE, params, true, responseListener );
         }
 
         request.send();
@@ -844,7 +843,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         }
 
         String uri = "palm://system.notifications/createToast";
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, payload, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, payload, true, listener );
         request.send();
     }
 
@@ -868,7 +867,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     @Override
     public void volumeUp( ResponseListener<Object> listener ) {
         String uri = "ssap://audio/volumeUp";
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, listener );
 
         request.send();
     }
@@ -880,7 +879,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     @Override
     public void volumeDown( ResponseListener<Object> listener ) {
         String uri = "ssap://audio/volumeDown";
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, listener );
 
         request.send();
     }
@@ -901,7 +900,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             e.printStackTrace();
         }
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, payload, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, payload, true, listener );
         request.send();
     }
 
@@ -931,9 +930,9 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         };
 
         if ( isSubscription )
-            request = new URLServiceSubscription<VolumeListener>( this, VOLUME, null, true, responseListener );
+            request = new URLServiceSubscription<>( this, VOLUME, null, true, responseListener );
         else
-            request = new ServiceCommand<VolumeListener>( this, VOLUME, null, true, responseListener );
+            request = new ServiceCommand<>( this, VOLUME, null, true, responseListener );
 
         request.send();
 
@@ -962,7 +961,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             e.printStackTrace();
         }
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, payload, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, payload, true, listener );
         request.send();
     }
 
@@ -989,9 +988,9 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         };
 
         if ( isSubscription )
-            request = new URLServiceSubscription<ResponseListener<Object>>( this, MUTE, null, true, responseListener );
+            request = new URLServiceSubscription<>( this, MUTE, null, true, responseListener );
         else
-            request = new ServiceCommand<ResponseListener<Object>>( this, MUTE, null, true, responseListener );
+            request = new ServiceCommand<>( this, MUTE, null, true, responseListener );
 
         request.send();
 
@@ -1035,9 +1034,9 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         };
 
         if ( isSubscription )
-            request = new URLServiceSubscription<ResponseListener<Object>>( this, VOLUME_STATUS, null, true, responseListener );
+            request = new URLServiceSubscription<>( this, VOLUME_STATUS, null, true, responseListener );
         else
-            request = new ServiceCommand<ResponseListener<Object>>( this, VOLUME_STATUS, null, true, responseListener );
+            request = new ServiceCommand<>( this, VOLUME_STATUS, null, true, responseListener );
 
         request.send();
 
@@ -1099,7 +1098,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, params, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, params, true, responseListener );
         request.send();
     }
 
@@ -1294,8 +1293,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             e.printStackTrace();
         }
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( launchSession
-                .getService(), CLOSE_MEDIA_URI, payload, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( launchSession.getService(), CLOSE_MEDIA_URI, payload, true, listener );
         request.send();
     }
 
@@ -1315,7 +1313,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     @Override
     public void play( ResponseListener<Object> listener ) {
         String uri = "ssap://media.controls/play";
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, listener );
 
         request.send();
     }
@@ -1323,7 +1321,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     @Override
     public void pause( ResponseListener<Object> listener ) {
         String uri = "ssap://media.controls/togglePause";
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, listener );
 
         request.send();
     }
@@ -1331,7 +1329,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     @Override
     public void stop( ResponseListener<Object> listener ) {
         String uri = "ssap://media.controls/stop";
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, listener );
 
         request.send();
     }
@@ -1339,7 +1337,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     @Override
     public void rewind( ResponseListener<Object> listener ) {
         String uri = "ssap://media.controls/rewind";
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, listener );
 
         request.send();
     }
@@ -1347,7 +1345,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     @Override
     public void fastForward( ResponseListener<Object> listener ) {
         String uri = "ssap://media.controls/fastForward";
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, listener );
 
         request.send();
     }
@@ -1398,7 +1396,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     public void channelUp( ResponseListener<Object> listener ) {
         String uri = "ssap://tv/channelUp";
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, listener );
         request.send();
     }
 
@@ -1410,7 +1408,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     public void channelDown( ResponseListener<Object> listener ) {
         String uri = "ssap://tv/channelDown";
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, listener );
         request.send();
     }
 
@@ -1440,7 +1438,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             e.printStackTrace();
         }
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, payload, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, payload, true, listener );
         request.send();
     }
 
@@ -1458,7 +1456,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             e.printStackTrace();
         }
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, payload, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, payload, true, listener );
         request.send();
     }
 
@@ -1482,9 +1480,9 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         };
 
         if ( isSubscription ) {
-            request = new URLServiceSubscription<ResponseListener<Object>>( this, CHANNEL, null, true, responseListener );
+            request = new URLServiceSubscription<>( this, CHANNEL, null, true, responseListener );
         } else
-            request = new ServiceCommand<ResponseListener<Object>>( this, CHANNEL, null, true, responseListener );
+            request = new ServiceCommand<>( this, CHANNEL, null, true, responseListener );
 
         request.send();
 
@@ -1511,7 +1509,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             public void onSuccess( Object response ) {
                 try {
                     JSONObject jsonObj = (JSONObject) response;
-                    ArrayList<ChannelInfo> list = new ArrayList<ChannelInfo>();
+                    ArrayList<ChannelInfo> list = new ArrayList<>();
 
                     JSONArray array = (JSONArray) jsonObj.get( "channelList" );
                     for ( int i = 0; i < array.length(); i++ ) {
@@ -1534,9 +1532,9 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         };
 
         if ( isSubscription )
-            request = new URLServiceSubscription<ResponseListener<Object>>( this, CHANNEL_LIST, null, true, responseListener );
+            request = new URLServiceSubscription<>( this, CHANNEL_LIST, null, true, responseListener );
         else
-            request = new ServiceCommand<ResponseListener<Object>>( this, CHANNEL_LIST, null, true, responseListener );
+            request = new ServiceCommand<>( this, CHANNEL_LIST, null, true, responseListener );
 
         request.send();
 
@@ -1575,9 +1573,9 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         };
 
         if ( isSubscription )
-            request = new URLServiceSubscription<ResponseListener<Object>>( this, uri, null, true, responseListener );
+            request = new URLServiceSubscription<>( this, uri, null, true, responseListener );
         else
-            request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, responseListener );
+            request = new ServiceCommand<>( this, uri, null, true, responseListener );
 
         request.send();
 
@@ -1619,9 +1617,9 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         };
 
         if ( isSubscription )
-            request = new URLServiceSubscription<ResponseListener<Object>>( this, PROGRAM, null, true, responseListener );
+            request = new URLServiceSubscription<>( this, PROGRAM, null, true, responseListener );
         else
-            request = new ServiceCommand<ResponseListener<Object>>( this, PROGRAM, null, true, responseListener );
+            request = new ServiceCommand<>( this, PROGRAM, null, true, responseListener );
 
         request.send();
 
@@ -1638,7 +1636,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     public ServiceSubscription<ProgramInfoListener> subscribeProgramInfo( ProgramInfoListener listener ) {
         Util.postError( listener, ServiceCommandError.notSupported() );
 
-        return new NotSupportedServiceSubscription<ProgramInfoListener>();
+        return new NotSupportedServiceSubscription<>();
     }
 
     @Override
@@ -1660,7 +1658,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         else
             uri = "ssap://com.webos.service.tv.display/set3DOff";
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, listener );
 
         request.send();
     }
@@ -1693,9 +1691,9 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
 
         ServiceCommand<State3DModeListener> request;
         if ( isSubscription )
-            request = new URLServiceSubscription<State3DModeListener>( this, uri, null, true, responseListener );
+            request = new URLServiceSubscription<>( this, uri, null, true, responseListener );
         else
-            request = new ServiceCommand<State3DModeListener>( this, uri, null, true, responseListener );
+            request = new ServiceCommand<>( this, uri, null, true, responseListener );
 
         request.send();
 
@@ -1775,7 +1773,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, responseListener );
         request.send();
     }
 
@@ -1795,7 +1793,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             e.printStackTrace();
         }
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, payload, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, payload, true, listener );
         request.send();
     }
 
@@ -1856,7 +1854,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, listener );
         request.send();
     }
 
@@ -2006,7 +2004,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         };
 
         String uri = "ssap://system/turnOff";
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, responseListener );
 
         request.send();
     }
@@ -2166,7 +2164,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, payload, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, payload, true, responseListener );
         request.send();
     }
 
@@ -2232,16 +2230,16 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             e.printStackTrace();
         }
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, payload, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, payload, true, listener );
         request.send();
     }
 
     public void connectToWebApp( final WebOSWebAppSession webAppSession, final boolean joinOnly, final ResponseListener<Object> connectionListener ) {
         if ( mWebAppSessions == null )
-            mWebAppSessions = new ConcurrentHashMap<String,WebOSWebAppSession>();
+            mWebAppSessions = new ConcurrentHashMap<>();
 
         if ( mAppToAppIdMappings == null )
-            mAppToAppIdMappings = new ConcurrentHashMap<String,String>();
+            mAppToAppIdMappings = new ConcurrentHashMap<>();
 
         if ( webAppSession == null || webAppSession.launchSession == null ) {
             Util.postError( connectionListener, new ServiceCommandError( 0, "You must provide a valid LaunchSession object", null ) );
@@ -2338,7 +2336,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             }
         };
 
-        webAppSession.appToAppSubscription = new URLServiceSubscription<ResponseListener<Object>>( webAppSession.socket, uri, payload, true, responseListener );
+        webAppSession.appToAppSubscription = new URLServiceSubscription<>( webAppSession.socket, uri, payload, true, responseListener );
         webAppSession.appToAppSubscription.subscribe();
     }
 
@@ -2384,7 +2382,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new URLServiceSubscription<ResponseListener<Object>>( this, uri, payload, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new URLServiceSubscription<>( this, uri, payload, true, responseListener );
         request.send();
     }
 
@@ -2424,7 +2422,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new URLServiceSubscription<ResponseListener<Object>>( this, uri, payload, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new URLServiceSubscription<>( this, uri, payload, true, responseListener );
         request.send();
     }
 
@@ -2466,9 +2464,9 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
 
         ServiceCommand<WebAppPinStatusListener> request;
         if ( isSubscription )
-            request = new URLServiceSubscription<WebAppPinStatusListener>( this, uri, payload, true, responseListener );
+            request = new URLServiceSubscription<>( this, uri, payload, true, responseListener );
         else
-            request = new ServiceCommand<WebAppPinStatusListener>( this, uri, payload, true, responseListener );
+            request = new ServiceCommand<>( this, uri, payload, true, responseListener );
 
         request.send();
 
@@ -2544,7 +2542,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
 
     private WebOSWebAppSession webAppSessionForLaunchSession( LaunchSession launchSession ) {
         if ( mWebAppSessions == null )
-            mWebAppSessions = new ConcurrentHashMap<String,WebOSWebAppSession>();
+            mWebAppSessions = new ConcurrentHashMap<>();
 
         if ( launchSession.getService() == null )
             launchSession.setService( this );
@@ -2597,7 +2595,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             e.printStackTrace();
         }
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, null, payload, true, listener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, null, payload, true, listener );
         sendCommand( request );
     }
 
@@ -2622,7 +2620,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     public void getServiceInfo( final ServiceInfoListener listener ) {
         String uri = "ssap://api/getServiceList";
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, new ResponseListener<Object>() {
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, new ResponseListener<Object>() {
 
             @Override
             public void onSuccess( Object response ) {
@@ -2647,7 +2645,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     public void getSystemInfo( final SystemInfoListener listener ) {
         String uri = "ssap://system/getSystemInfo";
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, new ResponseListener<Object>() {
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, new ResponseListener<Object>() {
 
             @Override
             public void onSuccess( Object response ) {
@@ -2692,7 +2690,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, responseListener );
         request.send();
     }
 
@@ -2719,7 +2717,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, responseListener );
         request.send();
     }
 
@@ -2746,7 +2744,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<ResponseListener<Object>>( this, uri, null, true, responseListener );
+        ServiceCommand<ResponseListener<Object>> request = new ServiceCommand<>( this, uri, null, true, responseListener );
         request.send();
     }
 
@@ -2787,7 +2785,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
 
     @Override
     protected void updateCapabilities() {
-        List<String> capabilities = new ArrayList<String>();
+        List<String> capabilities = new ArrayList<>();
 
         Collections.addAll( capabilities, VolumeControl.Capabilities );
         Collections.addAll( capabilities, MediaPlayer.Capabilities );
@@ -2860,7 +2858,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
         if ( permissions != null )
             return permissions;
 
-        List<String> defaultPermissions = new ArrayList<String>();
+        List<String> defaultPermissions = new ArrayList<>();
         Collections.addAll( defaultPermissions, kWebOSTVServiceOpenPermissions );
 
         if ( DiscoveryManager.getInstance().getPairingLevel() == PairingLevel.ON ) {
@@ -2964,7 +2962,7 @@ public class WebOSTVService extends DeviceService implements Launcher, MediaCont
     }
 
     private List<ExternalInputInfo> externalnputInfoFromJSONArray( JSONArray inputList ) {
-        List<ExternalInputInfo> externalInputInfoList = new ArrayList<ExternalInputInfo>();
+        List<ExternalInputInfo> externalInputInfoList = new ArrayList<>();
 
         for ( int i = 0; i < inputList.length(); i++ ) {
             try {

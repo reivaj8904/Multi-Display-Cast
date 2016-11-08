@@ -131,10 +131,10 @@ public class ZeroconfDiscoveryProvider implements DiscoveryProvider {
     private Timer scanTimer;
 
     public ZeroconfDiscoveryProvider( Context context ) {
-        foundServices = new ConcurrentHashMap<String,ServiceDescription>( 8, 0.75f, 2 );
+        foundServices = new ConcurrentHashMap<>( 8, 0.75f, 2 );
 
-        serviceListeners = new CopyOnWriteArrayList<DiscoveryProviderListener>();
-        serviceFilters = new CopyOnWriteArrayList<DiscoveryFilter>();
+        serviceListeners = new CopyOnWriteArrayList<>();
+        serviceFilters = new CopyOnWriteArrayList<>();
 
         try {
             srcAddress = Util.getIpAddress( context );
@@ -265,7 +265,7 @@ public class ZeroconfDiscoveryProvider implements DiscoveryProvider {
 
         @Override
         public void run() {
-            List<String> killKeys = new ArrayList<String>();
+            List<String> killKeys = new ArrayList<>();
 
             long killPoint = new Date().getTime() - TIMEOUT;
 

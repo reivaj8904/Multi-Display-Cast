@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class URLServiceSubscription<T extends ResponseListener<?>> extends ServiceCommand<T> implements ServiceSubscription<T> {
 
-    private List<T> listeners = new ArrayList<T>();
+    private List<T> listeners = new ArrayList<>();
 
     public URLServiceSubscription( ServiceCommandProcessor processor, String uri, JSONObject payload, ResponseListener<Object> listener ) {
         super( processor, uri, payload, listener );

@@ -26,7 +26,7 @@ import java.util.List;
 
 public class NotSupportedServiceSubscription<T> implements ServiceSubscription<T> {
 
-    private List<T> listeners = new ArrayList<T>();
+    private List<T> listeners = new ArrayList<>();
 
     @Override
     public void unsubscribe() {

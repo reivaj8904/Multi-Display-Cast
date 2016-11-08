@@ -122,11 +122,11 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     }
 
     //Version con CapabilityFilters
-    public void setDiscoveryManager(CapabilityFilter... filters) {
+    public void setDiscoveryManager( CapabilityFilter... filters ) {
         if ( discoveryManager == null ) {
             discoveryManager = DiscoveryManager.getInstance();
             DiscoveryManager.getInstance().registerDefaultDeviceTypes();
-            discoveryManager.setCapabilityFilters(filters);
+            discoveryManager.setCapabilityFilters( filters );
             discoveryManager.setPairingLevel( DiscoveryManager.PairingLevel.ON );
             discoveryManager.addListener( this );
             discoveryManager.start();

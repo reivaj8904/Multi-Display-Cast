@@ -31,7 +31,7 @@ public class SSDPPacket {
     static final String CRLF = "\r\n";
     static final String LF = "\n";
     DatagramPacket datagramPacket;
-    Map<String,String> data = new HashMap<String,String>();
+    Map<String,String> data = new HashMap<>();
     String type;
 
     public SSDPPacket( DatagramPacket datagramPacket ) {

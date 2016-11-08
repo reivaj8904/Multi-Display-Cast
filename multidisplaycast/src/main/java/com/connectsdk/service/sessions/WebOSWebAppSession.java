@@ -174,7 +174,7 @@ public class WebOSWebAppSession extends WebAppSession {
         super( launchSession, service );
 
         UID = 0;
-        mActiveCommands = new ConcurrentHashMap<String,ServiceCommand<?>>( 0, 0.75f, 10 );
+        mActiveCommands = new ConcurrentHashMap<>( 0, 0.75f, 10 );
         connected = false;
 
         this.service = (WebOSTVService) service;
@@ -523,7 +523,7 @@ public class WebOSWebAppSession extends WebAppSession {
             Util.postError( listener, new ServiceCommandError( 0, "JSON Parse error", null ) );
         }
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( null, null, null, listener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( null, null, null, listener );
 
         mActiveCommands.put( requestId, command );
 
@@ -552,7 +552,7 @@ public class WebOSWebAppSession extends WebAppSession {
             Util.postError( listener, new ServiceCommandError( 0, "JSON Parse error", null ) );
         }
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( null, null, null, new ResponseListener<Object>() {
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( null, null, null, new ResponseListener<Object>() {
 
             @Override
             public void onSuccess( Object response ) {
@@ -607,7 +607,7 @@ public class WebOSWebAppSession extends WebAppSession {
             Util.postError( listener, new ServiceCommandError( 0, "JSON Parse error", null ) );
         }
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( null, null, null, new ResponseListener<Object>() {
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( null, null, null, new ResponseListener<Object>() {
 
             @Override
             public void onSuccess( Object response ) {
@@ -662,7 +662,7 @@ public class WebOSWebAppSession extends WebAppSession {
             Util.postError( listener, new ServiceCommandError( 0, "JSON Parse error", null ) );
         }
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( null, null, null, new ResponseListener<Object>() {
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( null, null, null, new ResponseListener<Object>() {
 
             @Override
             public void onSuccess( Object response ) {
@@ -699,7 +699,7 @@ public class WebOSWebAppSession extends WebAppSession {
     @Override
     public ServiceSubscription<PlayStateListener> subscribePlayState( final PlayStateListener listener ) {
         if ( mPlayStateSubscription == null )
-            mPlayStateSubscription = new URLServiceSubscription<MediaControl.PlayStateListener>( null, null, null, null );
+            mPlayStateSubscription = new URLServiceSubscription<>( null, null, null, null );
 
         if ( !connected ) {
             connect( new ResponseListener<Object>() {
@@ -788,7 +788,7 @@ public class WebOSWebAppSession extends WebAppSession {
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( socket, null, null, response );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( socket, null, null, response );
 
         mActiveCommands.put( requestId, command );
 
@@ -872,7 +872,7 @@ public class WebOSWebAppSession extends WebAppSession {
             }
         };
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( null, null, null, response );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( null, null, null, response );
 
         mActiveCommands.put( requestId, command );
 
@@ -956,7 +956,7 @@ public class WebOSWebAppSession extends WebAppSession {
             return;
         }
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( null, null, null, listener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( null, null, null, listener );
         mActiveCommands.put( requestId, command );
         sendMessage( message, listener );
     }
@@ -984,7 +984,7 @@ public class WebOSWebAppSession extends WebAppSession {
             return;
         }
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( null, null, null, listener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( null, null, null, listener );
         mActiveCommands.put( requestId, command );
         sendMessage( message, listener );
     }
@@ -1012,7 +1012,7 @@ public class WebOSWebAppSession extends WebAppSession {
             return;
         }
 
-        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<ResponseListener<Object>>( null, null, null, listener );
+        ServiceCommand<ResponseListener<Object>> command = new ServiceCommand<>( null, null, null, listener );
         mActiveCommands.put( requestId, command );
         sendMessage( message, listener );
     }

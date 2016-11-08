@@ -155,10 +155,10 @@ public abstract class HttpConnection {
         private final URI uri;
         private Method method;
         private String payload;
-        private Map<String,String> headers = new LinkedHashMap<String,String>();
+        private Map<String,String> headers = new LinkedHashMap<>();
         private int code;
         private String response;
-        private Map<String,String> responseHeaders = new HashMap<String,String>();
+        private Map<String,String> responseHeaders = new HashMap<>();
 
         private CustomConnectionClient( URI uri ) {
             this.uri = uri;

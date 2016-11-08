@@ -205,7 +205,7 @@ public class MediaInfo {
         if ( images == null ) {
             return;
         }
-        List<ImageInfo> list = new ArrayList<ImageInfo>();
+        List<ImageInfo> list = new ArrayList<>();
         Collections.addAll( list, images );
         this.setImages( list );
     }
@@ -268,7 +268,7 @@ public class MediaInfo {
         private void createImagesList() {
             if ( allImages == null ) {
                 // Currently only one image is used by all services with index 0
-                allImages = new ArrayList<ImageInfo>( Collections.<ImageInfo> nCopies( 1, null ) );
+                allImages = new ArrayList<>( Collections.<ImageInfo> nCopies( 1, null ) );
             }
         }
     }

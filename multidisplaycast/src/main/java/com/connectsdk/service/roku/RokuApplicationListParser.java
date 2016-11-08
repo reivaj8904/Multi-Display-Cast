@@ -39,7 +39,7 @@ public class RokuApplicationListParser extends DefaultHandler {
 
     public RokuApplicationListParser() {
         value = null;
-        appList = new ArrayList<AppInfo>();
+        appList = new ArrayList<>();
     }
 
     @Override

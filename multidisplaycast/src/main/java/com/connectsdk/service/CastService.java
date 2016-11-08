@@ -96,7 +96,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
     boolean currentMuteStatus;
     boolean mWaitingForReconnect;
     // Queue of commands that should be sent once register is complete
-    CopyOnWriteArraySet<ConnectionListener> commandQueue = new CopyOnWriteArraySet<ConnectionListener>();
+    CopyOnWriteArraySet<ConnectionListener> commandQueue = new CopyOnWriteArraySet<>();
     private String messageCallbackNamespace;
     private com.google.android.gms.cast.Cast.MessageReceivedCallback messageCallback;
 
@@ -108,8 +108,8 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
         mConnectionCallbacks = new ConnectionCallbacks();
         mConnectionFailedListener = new ConnectionFailedListener();
 
-        sessions = new HashMap<String,CastWebAppSession>();
-        subscriptions = new ArrayList<URLServiceSubscription<?>>();
+        sessions = new HashMap<>();
+        subscriptions = new ArrayList<>();
 
         mWaitingForReconnect = false;
     }
@@ -374,7 +374,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
 
                 if ( metadata.getImages() != null && metadata.getImages().size() > 0 ) {
                     String iconUrl = metadata.getImages().get( 0 ).getUrl().toString();
-                    list = new ArrayList<ImageInfo>();
+                    list = new ArrayList<>();
                     list.add( new ImageInfo( iconUrl ) );
                 }
             }
@@ -389,7 +389,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
 
     @Override
     public ServiceSubscription<MediaInfoListener> subscribeMediaInfo( MediaInfoListener listener ) {
-        URLServiceSubscription<MediaInfoListener> request = new URLServiceSubscription<MediaInfoListener>( this, "info", null, null );
+        URLServiceSubscription<MediaInfoListener> request = new URLServiceSubscription<>( this, "info", null, null );
         request.addListener( listener );
         addSubscription( request );
 
@@ -1080,7 +1080,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
 
     @Override
     public ServiceSubscription<VolumeListener> subscribeVolume( VolumeListener listener ) {
-        URLServiceSubscription<VolumeListener> request = new URLServiceSubscription<VolumeListener>( this, CAST_SERVICE_VOLUME_SUBSCRIPTION_NAME, null, null );
+        URLServiceSubscription<VolumeListener> request = new URLServiceSubscription<>( this, CAST_SERVICE_VOLUME_SUBSCRIPTION_NAME, null, null );
         request.addListener( listener );
         addSubscription( request );
 
@@ -1089,7 +1089,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
 
     @Override
     public ServiceSubscription<MuteListener> subscribeMute( MuteListener listener ) {
-        URLServiceSubscription<MuteListener> request = new URLServiceSubscription<MuteListener>( this, CAST_SERVICE_MUTE_SUBSCRIPTION_NAME, null, null );
+        URLServiceSubscription<MuteListener> request = new URLServiceSubscription<>( this, CAST_SERVICE_MUTE_SUBSCRIPTION_NAME, null, null );
         request.addListener( listener );
         addSubscription( request );
 
@@ -1098,7 +1098,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
 
     @Override
     protected void updateCapabilities() {
-        List<String> capabilities = new ArrayList<String>();
+        List<String> capabilities = new ArrayList<>();
 
         Collections.addAll( capabilities, MediaPlayer.Capabilities );
         Collections.addAll( capabilities, VolumeControl.Capabilities );
@@ -1178,7 +1178,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
 
     @Override
     public ServiceSubscription<PlayStateListener> subscribePlayState( PlayStateListener listener ) {
-        URLServiceSubscription<PlayStateListener> request = new URLServiceSubscription<PlayStateListener>( this, PLAY_STATE, null, null );
+        URLServiceSubscription<PlayStateListener> request = new URLServiceSubscription<>( this, PLAY_STATE, null, null );
         request.addListener( listener );
         addSubscription( request );
 
