@@ -73,6 +73,7 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 public class CastService extends DeviceService implements MediaPlayer, MediaControl, VolumeControl, WebAppLauncher {
+
     public static final String ID = "Chromecast";
     public final static String PLAY_STATE = "PlayState";
 
@@ -762,7 +763,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
                                                         .setResultCallback( new ApplicationConnectionResultCallback( launchWebAppListener ) );
                                             } catch ( Exception e ) {
                                                 Util.postError( listener, new ServiceCommandError( 0, "Unable to launch", null ) );
-                                    }
+                                            }
                                         }
                                     }
                                 } );
@@ -840,7 +841,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
                                                             Util.postSuccess( listener, result );
                                                         }
                                                     } );
-                                } else {
+                                        } else {
                                             Util.postSuccess( listener, result );
                                         }
                                     } else {
@@ -1260,6 +1261,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
     public static interface PlayIdleReasonListener extends ResponseListener<Integer> {}
 
     private class CastListener extends Cast.Listener {
+
         @Override
         public void onApplicationDisconnected( int statusCode ) {
             Log.d( Util.T, "Cast.Listener.onApplicationDisconnected: " + statusCode + " currentAppId:" + currentAppId );
@@ -1331,6 +1333,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
     }
 
     private class ConnectionCallbacks implements GoogleApiClient.ConnectionCallbacks {
+
         @Override
         public void onConnectionSuspended( final int cause ) {
             Log.d( Util.T, "ConnectionCallbacks.onConnectionSuspended" );
@@ -1398,6 +1401,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
     }
 
     private class ConnectionFailedListener implements GoogleApiClient.OnConnectionFailedListener {
+
         @Override
         public void onConnectionFailed( final ConnectionResult result ) {
             Log.d( Util.T, "ConnectionFailedListener.onConnectionFailed " + ( result != null ? result : "" ) );
@@ -1423,6 +1427,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
     }
 
     private class ApplicationConnectionResultCallback implements ResultCallback<Cast.ApplicationConnectionResult> {
+
         LaunchWebAppListener listener;
 
         public ApplicationConnectionResultCallback( LaunchWebAppListener listener ) {

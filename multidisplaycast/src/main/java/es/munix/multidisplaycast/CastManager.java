@@ -155,7 +155,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     }
 
     public void setCastMenuVisible( Boolean visible ) {
-        log( "setCastMenuVisible castMenuItem != null " + ( castMenuItem != null ) );
+        log( "setCastMenuVisible(" + visible + ")" );
         if ( castMenuItem != null ) {
             castMenuItem.setVisible( visible );
         }
@@ -437,6 +437,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
             mMediaControl.seek( position, new ResponseListener<Object>() {
                 @Override
                 public void onError( ServiceCommandError error ) {
+                    error.printStackTrace();
                     for ( Map.Entry<String,PlayStatusListener> playStatusListener : playStatusListeners
                             .entrySet() ) {
                         playStatusListener.getValue().onSuccessSeek();
@@ -565,6 +566,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
     @Override
     public void onConnectionFailed( ConnectableDevice device, ServiceCommandError error ) {
+        error.printStackTrace();
         Log.e( TAG, "onConnectionFailed" );
     }
 
@@ -677,10 +679,6 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
             case Idle:
                 log( "PlayStateStatus: idle" );
-                for ( Map.Entry<String,PlayStatusListener> playStatusListener : playStatusListeners.entrySet() ) {
-                    playStatusListener.getValue()
-                            .onPlayStatusChanged( PlayStatusListener.STATUS_STOPPED );
-                }
                 break;
 
             case Paused:
@@ -737,6 +735,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
     @Override
     public void onError( ServiceCommandError error ) {
+        error.printStackTrace();
     }
     //////////////////////////////////////////////////////////////
 }
