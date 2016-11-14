@@ -52,8 +52,6 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
         getSupportActionBar().setDisplayShowHomeEnabled( true );
         getSupportActionBar().setTitle( null );
-        setViews();
-        paintInterface();
     }
 
     private void setViews() {
@@ -92,6 +90,9 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
                 .getMediaObject()
                 .getTitle() ) ) {
             finish();
+        } else {
+            setViews();
+            paintInterface();
         }
     }
 

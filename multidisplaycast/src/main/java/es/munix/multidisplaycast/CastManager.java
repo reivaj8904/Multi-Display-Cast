@@ -339,12 +339,13 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                                         .getVolume( new VolumeControl.VolumeListener() {
                                             @Override
                                             public void onSuccess( Float object ) {
-                                                mediaObject.setCurrentVolume( (int) ( object * 100.0f ) );
+                                                if ( mediaObject != null ) {
+                                                    mediaObject.setCurrentVolume( (int) ( object * 100.0f ) );
+                                                }
                                             }
 
                                             @Override
                                             public void onError( ServiceCommandError error ) {
-                                                mediaObject.setCurrentVolume( 0 );
                                             }
                                         } );
                             }
@@ -427,7 +428,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     }
 
     public void setVolume( float volume ) {
-        if ( isConnected() && mMediaControl != null ) {
+        if ( isConnected() && mMediaControl != null && connectableDevice.getCapability( VolumeControl.class ) != null ) {
             connectableDevice.getCapability( VolumeControl.class ).setVolume( volume, null );
         }
     }

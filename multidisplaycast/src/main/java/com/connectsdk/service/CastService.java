@@ -1348,7 +1348,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
 
             attachMediaPlayer();
 
-            if ( mApiClient != null ) {
+            if ( mApiClient != null && mApiClient.isConnected() ) {
                 Cast.CastApi.joinApplication( mApiClient )
                         .setResultCallback( new ResultCallback<Cast.ApplicationConnectionResult>() {
 
