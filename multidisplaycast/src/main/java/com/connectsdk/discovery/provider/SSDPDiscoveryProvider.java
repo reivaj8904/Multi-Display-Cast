@@ -248,18 +248,20 @@ public class SSDPDiscoveryProvider implements DiscoveryProvider {
                 }
 
                 for ( int i = 0; i < 3; i++ ) {
-                    executorService.schedule( new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                if ( ssdpClient != null ) {
-                                    ssdpClient.send( message );
+                    if ( !executorService.isTerminated() && !executorService.isShutdown() ) {
+                        executorService.schedule( new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    if ( ssdpClient != null ) {
+                                        ssdpClient.send( message );
+                                    }
+                                } catch ( IOException ex ) {
+                                    Log.e( Util.T, ex.getMessage() );
                                 }
-                            } catch ( IOException ex ) {
-                                Log.e( Util.T, ex.getMessage() );
                             }
-                        }
-                    }, i, TimeUnit.SECONDS );
+                        }, i, TimeUnit.SECONDS );
+                    }
                 }
             }
         }
