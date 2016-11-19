@@ -126,6 +126,11 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
         }
     }
 
+    public void hideSeekBar() {
+        positionLayer.setVisibility( View.GONE );
+        streamSeekBar.setVisibility( View.GONE );
+    }
+
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
         if ( item.getItemId() == android.R.id.home ) {
