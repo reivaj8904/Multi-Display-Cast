@@ -503,7 +503,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
             stopUpdating();
             mMediaControl.stop( null );
         } else {
-            NotificationsHelper.cancelNotification( context );
+            NotificationsHelper.cancelNotification( context.getApplicationContext() );
         }
         unsetMediaControl();
     }

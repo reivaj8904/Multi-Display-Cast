@@ -26,8 +26,10 @@ public class NotificationsHelper {
     public static final int NOTIFICATION_ID = 800;
 
     public static void cancelNotification( Context context ) {
-        NotificationManager nMgr = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
-        nMgr.cancel( NOTIFICATION_ID );
+        if ( context != null ) {
+            NotificationManager nMgr = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
+            nMgr.cancel( NOTIFICATION_ID );
+        }
     }
 
     public static void showNotification( final Context context, String title, String subtitle, final String icon, Boolean isPaused ) {
