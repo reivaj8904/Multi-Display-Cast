@@ -12,11 +12,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.munix.utilities.Views;
 
 import es.munix.multidisplaycast.interfaces.CastListener;
 import es.munix.multidisplaycast.interfaces.PlayStatusListener;
 import es.munix.multidisplaycast.model.MediaObject;
-import es.munix.multidisplaycast.utils.Effect;
 import es.munix.multidisplaycast.utils.Format;
 
 /**
@@ -73,7 +73,6 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
         volumeBarControl = (SeekBar) findViewById( R.id.volumeControl );
         streamSeekBar = (SeekBar) findViewById( R.id.stream_seek_bar );
 
-        volumeBarControl.setOnSeekBarChangeListener( this );
         streamSeekBar.setOnSeekBarChangeListener( this );
         stop.setOnClickListener( this );
         play.setOnClickListener( this );
@@ -115,6 +114,7 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
             volume.setBackgroundResource( R.drawable.shape_buttons_disabled );
         } else {
             volumeBarControl.setProgress( mediaObject.getCurrentVolume() );
+            volumeBarControl.setOnSeekBarChangeListener( this );
         }
 
         if ( mediaObject.getCanFastForwart() ) {
@@ -168,7 +168,7 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
         switch( playStatus ) {
             case STATUS_PLAYING:
                 if ( loader.getVisibility() == View.VISIBLE ) {
-                    Effect.disappear( loader, 300 );
+                    Views.disappear( loader, 300 );
                 }
 
                 break;
@@ -188,7 +188,7 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
 
             case STATUS_NOT_SUPPORT_LISTENER:
                 if ( loader.getVisibility() == View.VISIBLE ) {
-                    Effect.disappear( loader, 300 );
+                    Views.disappear( loader, 300 );
                 }
                 break;
         }
@@ -241,8 +241,8 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
                 @Override
                 public void run() {
                     if ( volumeLayer != null ) {
-                        Effect.disappear( volumeLayer, 300 );
-                        Effect.disappear( fadeBar, 300 );
+                        Views.disappear( volumeLayer, 300 );
+                        Views.disappear( fadeBar, 300 );
                     }
                 }
             }, 1000 );
@@ -263,11 +263,11 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
             CastManager.getInstance().togglePause();
         } else if ( id == R.id.volume ) {
             if ( volumeLayer.getVisibility() != View.VISIBLE ) {
-                Effect.appear( volumeLayer, 300 );
-                Effect.appear( fadeBar, 300 );
+                Views.appear( volumeLayer, 300 );
+                Views.appear( fadeBar, 300 );
             } else {
-                Effect.disappear( volumeLayer, 300 );
-                Effect.disappear( fadeBar, 300 );
+                Views.disappear( volumeLayer, 300 );
+                Views.disappear( fadeBar, 300 );
             }
         }
     }
