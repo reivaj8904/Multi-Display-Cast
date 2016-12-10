@@ -34,6 +34,7 @@ import com.connectsdk.service.capability.VolumeControl;
 import com.connectsdk.service.capability.listeners.ResponseListener;
 import com.connectsdk.service.command.ServiceCommandError;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     private Boolean statusStartPlayingFired = false;
 
     //Unset at destroy
-    private Activity activity;
+    private WeakReference<Activity> activityWeakReference;
 
     //Dialogos
     private AlertDialog connectToCastDialog;
@@ -148,11 +149,15 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
     public void registerForActivity( Activity activity, Menu menu, int menuId ) {
         log( "registerForActivity" );
-        this.activity = activity;
+        activityWeakReference = new WeakReference<Activity>( activity );
         castMenuItem = menu.findItem( menuId );
         castMenuItem.setIcon( R.drawable.cast_off );
         castMenuItem.setOnMenuItemClickListener( this );
         calculateMenuVisibility();
+    }
+
+    private Activity getActivity() {
+        return activityWeakReference.get();
     }
 
     public void setCastMenuVisible( Boolean visible ) {
@@ -210,7 +215,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     }
 
     private void showDisconnectAlert( String title, final String disconnectLabel, String image ) {
-        View customView = View.inflate( activity, R.layout.cast_disconnect, null );
+        View customView = View.inflate( getActivity(), R.layout.cast_disconnect, null );
         final TextView deviceName = (TextView) customView.findViewById( R.id.deviceName );
         if ( connectableDevice.getFriendlyName() != null ) {
             deviceName.setText( connectableDevice.getFriendlyName() );
@@ -223,12 +228,12 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
         final ImageView mediaImage = (ImageView) customView.findViewById( R.id.mediaImage );
         if ( image != null ) {
-            Glide.with( activity ).load( image ).into( mediaImage );
+            Glide.with( getActivity() ).load( image ).into( mediaImage );
         } else {
             mediaImage.setVisibility( View.GONE );
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder( activity ).setView( customView )
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() ).setView( customView )
                 .setPositiveButton( disconnectLabel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick( DialogInterface dialogInterface, int i ) {
@@ -259,7 +264,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                 showDisconnectAlert( "No se está reproduciendo contenido", "Desconectar", null );
             }
         } else {
-            final DevicePicker devicePicker = new DevicePicker( activity );
+            final DevicePicker devicePicker = new DevicePicker( getActivity() );
             connectToCastDialog = devicePicker.getPickerDialog( "Selecciona dispositivo", new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
@@ -271,7 +276,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
             } );
             connectToCastDialog.show();
 
-            pairingAlertDialog = new AlertDialog.Builder( activity ).setTitle( "Conectando con su TV" )
+            pairingAlertDialog = new AlertDialog.Builder( getActivity() ).setTitle( "Conectando con su TV" )
                     .setMessage( "Confirme la conexión con su TV" )
                     .setPositiveButton( "Aceptar", null )
                     .setNegativeButton( "Cancelar", new DialogInterface.OnClickListener() {
@@ -284,15 +289,15 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                     } )
                     .create();
 
-            View v = View.inflate( activity, R.layout.input_code_dialog, null );
+            View v = View.inflate( getActivity(), R.layout.input_code_dialog, null );
             final EditText input = (EditText) v.findViewById( R.id.input );
             input.setMaxLines( 1 );
 
 
-            final InputMethodManager imm = (InputMethodManager) activity.getApplicationContext()
+            final InputMethodManager imm = (InputMethodManager) getActivity().getApplicationContext()
                     .getSystemService( Context.INPUT_METHOD_SERVICE );
 
-            pairingCodeDialog = new AlertDialog.Builder( activity ).setTitle( "Ingrese el código que ve en la TV" )
+            pairingCodeDialog = new AlertDialog.Builder( getActivity() ).setTitle( "Ingrese el código que ve en la TV" )
                     .setView( v )
                     .setPositiveButton( android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
@@ -416,7 +421,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                                         .onPlayStatusChanged( PlayStatusListener.STATUS_NOT_SUPPORT_LISTENER );
                             }
                             stop();
-                            Toast.makeText( activity, "Contenido no compatible", Toast.LENGTH_LONG )
+                            Toast.makeText( getActivity(), "Contenido no compatible", Toast.LENGTH_LONG )
                                     .show();
                         }
                     } );
@@ -619,7 +624,12 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
         castListeners.clear();
         playStatusListeners.clear();
-        activity = null;
+        try {
+            activityWeakReference.clear();
+            activityWeakReference = null;
+        } catch ( Exception e ) {
+            //untested
+        }
     }
 
     private void stopUpdating() {
