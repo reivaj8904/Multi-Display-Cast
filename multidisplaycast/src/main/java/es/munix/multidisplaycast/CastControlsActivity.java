@@ -127,8 +127,13 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
     }
 
     public void hideSeekBar() {
-        positionLayer.setVisibility( View.GONE );
-        streamSeekBar.setVisibility( View.GONE );
+        if ( positionLayer != null ) {
+            positionLayer.setVisibility( View.GONE );
+        }
+
+        if ( streamSeekBar != null ) {
+            streamSeekBar.setVisibility( View.GONE );
+        }
     }
 
     @Override
