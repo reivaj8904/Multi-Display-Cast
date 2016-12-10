@@ -21,7 +21,11 @@ public class AntiLeakActivityService extends Service {
 
     @Override
     public void onTaskRemoved( Intent rootIntent ) {
-        CastManager.getInstance().onDestroy();
+        try {
+            CastManager.getInstance().onDestroy();
+        } catch ( Exception e ) {
+
+        }
         stopSelf();
         super.onTaskRemoved( rootIntent );
     }

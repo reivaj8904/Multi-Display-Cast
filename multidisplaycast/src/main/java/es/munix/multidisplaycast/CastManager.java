@@ -590,7 +590,9 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
         stop();
         mediaObject = null;
         statusStartPlayingFired = false;
-        NotificationsHelper.cancelNotification( context );
+        if ( context != null ) {
+            NotificationsHelper.cancelNotification( context );
+        }
         if ( connectToCastDialog != null ) {
             connectToCastDialog.cancel();
             connectToCastDialog = null;
