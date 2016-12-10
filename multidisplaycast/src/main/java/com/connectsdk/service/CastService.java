@@ -1278,10 +1278,14 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
                 @Override
                 public void onConnected() {
                     if ( mApiClient != null ) {
-                        ApplicationMetadata applicationMetadata = Cast.CastApi.getApplicationMetadata( mApiClient );
+                        try {
+                            ApplicationMetadata applicationMetadata = Cast.CastApi.getApplicationMetadata( mApiClient );
 
-                        if ( applicationMetadata != null )
-                            currentAppId = applicationMetadata.getApplicationId();
+                            if ( applicationMetadata != null )
+                                currentAppId = applicationMetadata.getApplicationId();
+                        } catch ( Exception e ) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             };
