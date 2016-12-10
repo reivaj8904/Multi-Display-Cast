@@ -48,6 +48,7 @@ import es.munix.multidisplaycast.model.MediaObject;
 import es.munix.multidisplaycast.services.AntiLeakActivityService;
 import es.munix.multidisplaycast.utils.StorageUtils;
 
+
 /**
  * Created by munix on 1/11/16.
  */
@@ -331,23 +332,27 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                         public void onSuccess( MediaPlayer.MediaLaunchObject object ) {
 
                             mediaObject = new MediaObject( title, subtitle, icon, mimeType, url );
-                            mediaObject.setCanChangeVolume( connectableDevice.hasCapability( VolumeControl.Volume_Set ) );
-                            mediaObject.setCanFastForwart( connectableDevice.hasCapability( MediaControl.FastForward ) );
+                            if ( connectableDevice != null )
+                                mediaObject.setCanChangeVolume( connectableDevice.hasCapability( VolumeControl.Volume_Set ) );
+                            if ( connectableDevice != null )
+                                mediaObject.setCanFastForwart( connectableDevice.hasCapability( MediaControl.FastForward ) );
 
                             if ( mediaObject.getCanChangeVolume() ) {
-                                connectableDevice.getCapability( VolumeControl.class )
-                                        .getVolume( new VolumeControl.VolumeListener() {
-                                            @Override
-                                            public void onSuccess( Float object ) {
-                                                if ( mediaObject != null ) {
-                                                    mediaObject.setCurrentVolume( (int) ( object * 100.0f ) );
+                                if ( connectableDevice != null ) {
+                                    connectableDevice.getCapability( VolumeControl.class )
+                                            .getVolume( new VolumeControl.VolumeListener() {
+                                                @Override
+                                                public void onSuccess( Float object ) {
+                                                    if ( mediaObject != null ) {
+                                                        mediaObject.setCurrentVolume( (int) ( object * 100.0f ) );
+                                                    }
                                                 }
-                                            }
 
-                                            @Override
-                                            public void onError( ServiceCommandError error ) {
-                                            }
-                                        } );
+                                                @Override
+                                                public void onError( ServiceCommandError error ) {
+                                                }
+                                            } );
+                                }
                             }
 
                             NotificationsHelper.showNotification( context, title, subtitle, icon, false );
