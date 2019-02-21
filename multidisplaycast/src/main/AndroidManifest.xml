@@ -1,5 +1,8 @@
-<manifest package="es.munix.multidisplaycast"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="es.munix.multidisplaycast"
+    android:versionCode="3"
+    android:versionName="2.01">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -16,10 +19,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
-        <service android:name="es.munix.multidisplaycast.services.AntiLeakActivityService"
-                 android:enabled="true"
-                 android:exported="false"
-                 android:stopWithTask="false"/>
+        <service
+            android:name="es.munix.multidisplaycast.services.AntiLeakActivityService"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false"/>
         <receiver android:name="es.munix.multidisplaycast.services.CastReceiver"/>
         <meta-data
             android:name="com.google.android.gms.version"

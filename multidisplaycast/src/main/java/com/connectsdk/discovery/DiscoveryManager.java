@@ -483,28 +483,27 @@ public class DiscoveryManager implements ConnectableDeviceListener, DiscoveryPro
 
             @Override
             public void run() {
-                if ( discoveryProviders.size() == 0 ) {
-                    registerDefaultDeviceTypes();
-                }
-
-                ConnectivityManager connManager = (ConnectivityManager) context.getSystemService( Context.CONNECTIVITY_SERVICE );
-                NetworkInfo mWifi = connManager.getNetworkInfo( ConnectivityManager.TYPE_WIFI );
-
-                if ( mWifi.isConnected() ) {
-                    for ( DiscoveryProvider provider : discoveryProviders ) {
-                        provider.start();
+                try {
+                    if ( discoveryProviders.size() == 0 ) {
+                        registerDefaultDeviceTypes();
                     }
-                } else {
-                    Log.w( Util.T, "Wifi is not connected yet" );
 
-                    Util.runOnUI( new Runnable() {
+                    ConnectivityManager connManager = (ConnectivityManager) context.getSystemService( Context.CONNECTIVITY_SERVICE );
+                    NetworkInfo mWifi = connManager.getNetworkInfo( ConnectivityManager.TYPE_WIFI );
 
-                        @Override
-                        public void run() {
-                            for ( DiscoveryManagerListener listener : discoveryListeners )
-                                listener.onDiscoveryFailed( DiscoveryManager.this, new ServiceCommandError( 0, "No wifi connection", null ) );
+                    if ( mWifi.isConnected() ) {
+                        for ( DiscoveryProvider provider : discoveryProviders ) {
+                            provider.start();
                         }
-                    } );
+                    } else {
+                        Log.w( Util.T, "Wifi is not connected yet" );
+
+                        for ( DiscoveryManagerListener listener : discoveryListeners )
+                            listener.onDiscoveryFailed( DiscoveryManager.this, new ServiceCommandError( 0, "No wifi connection", null ) );
+                    }
+                }catch (Exception e){
+                    for ( DiscoveryManagerListener listener : discoveryListeners )
+                        listener.onDiscoveryFailed( DiscoveryManager.this, new ServiceCommandError( 0, "Exception during discovery", null ) );
                 }
             }
         } );

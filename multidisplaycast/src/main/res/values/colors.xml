@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="castPrimaryColor">#3F51B5</color>
-    <color name="castLightPrimaryColor">#5C6BC0</color>
+    <color name="castPrimaryColor">#d32f2f</color>
+    <color name="castLightPrimaryColor">#ff6f60</color>
     <color name="castDisabledColor">#555</color>
+
+    <color name="controls_alpha">#8bffffff</color>
 
 </resources>

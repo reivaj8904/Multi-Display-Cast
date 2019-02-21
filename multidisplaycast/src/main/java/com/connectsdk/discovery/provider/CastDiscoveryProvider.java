@@ -21,9 +21,9 @@
 package com.connectsdk.discovery.provider;
 
 import android.content.Context;
-import android.support.v7.media.MediaRouteSelector;
-import android.support.v7.media.MediaRouter;
-import android.support.v7.media.MediaRouter.RouteInfo;
+import androidx.mediarouter.media.MediaRouteSelector;
+import androidx.mediarouter.media.MediaRouter;
+import androidx.mediarouter.media.MediaRouter.RouteInfo;
 import android.util.Log;
 
 import com.connectsdk.core.Util;
@@ -129,10 +129,14 @@ public class CastDiscoveryProvider implements DiscoveryProvider {
 
             @Override
             public void run() {
-                mMediaRouter.addCallback( mMediaRouteSelector, mMediaRouterCallback, MediaRouter.CALLBACK_FLAG_REQUEST_DISCOVERY );
-                RouteInfo mSelectedRoute = mMediaRouter.getSelectedRoute();
-                if ( ( mSelectedRoute != null ) && ( mSelectedRoute.matchesSelector( mMediaRouteSelector ) ) )
-                    mMediaRouterCallback.onRouteAdded( mMediaRouter, mSelectedRoute );
+                try {
+                    mMediaRouter.addCallback( mMediaRouteSelector, mMediaRouterCallback, MediaRouter.CALLBACK_FLAG_REQUEST_DISCOVERY );
+                    RouteInfo mSelectedRoute = mMediaRouter.getSelectedRoute();
+                    if ( ( mSelectedRoute != null ) && ( mSelectedRoute.matchesSelector( mMediaRouteSelector ) ) )
+                        mMediaRouterCallback.onRouteAdded( mMediaRouter, mSelectedRoute );
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         } );
     }
@@ -172,36 +176,40 @@ public class CastDiscoveryProvider implements DiscoveryProvider {
             boolean isNew = foundService == null;
             boolean listUpdateFlag = false;
 
-            if ( isNew ) {
-                foundService = new ServiceDescription( CastService.ID, uuid, castDevice.getIpAddress()
-                        .getHostAddress() );
-                foundService.setFriendlyName( castDevice.getFriendlyName() );
-                foundService.setModelName( castDevice.getModelName() );
-                foundService.setModelNumber( castDevice.getDeviceVersion() );
-                foundService.setModelDescription( route.getDescription() );
-                foundService.setPort( castDevice.getServicePort() );
-                foundService.setServiceID( CastService.ID );
-                foundService.setDevice( castDevice );
-
-                listUpdateFlag = true;
-            } else {
-                foundService.setIpAddress( castDevice.getIpAddress().getHostAddress() );
-                foundService.setModelName( castDevice.getModelName() );
-                foundService.setModelNumber( castDevice.getDeviceVersion() );
-                foundService.setModelDescription( route.getDescription() );
-                foundService.setPort( castDevice.getServicePort() );
-
-                if ( !foundService.getFriendlyName().equals( castDevice.getFriendlyName() ) ) {
+            try {
+                if ( isNew ) {
+                    foundService = new ServiceDescription( CastService.ID, uuid, castDevice.getIpAddress()
+                            .getHostAddress() );
                     foundService.setFriendlyName( castDevice.getFriendlyName() );
+                    foundService.setModelName( castDevice.getModelName() );
+                    foundService.setModelNumber( castDevice.getDeviceVersion() );
+                    foundService.setModelDescription( route.getDescription() );
+                    foundService.setPort( castDevice.getServicePort() );
+                    foundService.setServiceID( CastService.ID );
+                    foundService.setDevice( castDevice );
+
                     listUpdateFlag = true;
+                } else {
+                    foundService.setIpAddress( castDevice.getIpAddress().getHostAddress() );
+                    foundService.setModelName( castDevice.getModelName() );
+                    foundService.setModelNumber( castDevice.getDeviceVersion() );
+                    foundService.setModelDescription( route.getDescription() );
+                    foundService.setPort( castDevice.getServicePort() );
+
+                    if ( !foundService.getFriendlyName().equals( castDevice.getFriendlyName() ) ) {
+                        foundService.setFriendlyName( castDevice.getFriendlyName() );
+                        listUpdateFlag = true;
+                    }
+
+                    foundService.setDevice( castDevice );
                 }
 
-                foundService.setDevice( castDevice );
+                foundService.setLastDetection( new Date().getTime() );
+
+                foundServices.put( uuid, foundService );
+            }catch (Exception e){
+                e.printStackTrace();
             }
-
-            foundService.setLastDetection( new Date().getTime() );
-
-            foundServices.put( uuid, foundService );
 
             if ( listUpdateFlag ) {
                 for ( DiscoveryProviderListener listenter : serviceListeners ) {

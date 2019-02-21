@@ -92,7 +92,7 @@ public class DevicePickerAdapter extends BaseAdapter {
 
         ImageView image = (ImageView) view.findViewById( R.id.icon );
         if ( device.getConnectedServiceNames().toLowerCase().contains( "chromecast" ) ) {
-            image.setImageResource( R.drawable.cast );
+            image.setImageResource( R.drawable.cast_mc_off);
         } else if ( device.getConnectedServiceNames().toLowerCase().contains( "airplay" ) ) {
             image.setImageResource( R.drawable.airplay );
         } else {

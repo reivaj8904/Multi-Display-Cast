@@ -28,6 +28,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="12dp"
+        android:tint="?colorControlNormal"
         android:src="@drawable/airplay"/>
 
     <RelativeLayout
@@ -39,21 +40,21 @@
 
         <TextView
             android:id="@+id/title"
-            style="@style/Widget.MediaRouter.ChooserText.Primary"
+            style="@style/Widget.MediaRouter.ChooserTextPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#212121"
+            android:textColor="?android:textColorPrimary"
             tools:text="Title"/>
 
         <TextView
             android:id="@+id/subtitle"
-            style="@style/Widget.MediaRouter.ChooserText.Secondary"
+            style="@style/Widget.MediaRouter.ChooserTextSecondary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/title"
             android:layout_alignStart="@+id/title"
             android:layout_below="@+id/title"
-            android:textColor="#616161"
+            android:textColor="?android:textColorSecondary"
             tools:text="Subtitle"/>
     </RelativeLayout>
 </RelativeLayout>

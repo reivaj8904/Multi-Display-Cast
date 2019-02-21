@@ -5,9 +5,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 
 import com.bumptech.glide.Glide;
 
@@ -38,7 +39,7 @@ public class NotificationsHelper {
                 .setAutoCancel( false )
                 .setContentTitle( title )
                 .setContentText( subtitle )
-                .setSmallIcon( R.drawable.cast_on );
+                .setSmallIcon( R.drawable.cast_mc_on);
 
 
         Intent castActivityIntent = new Intent( context, CastControlsActivity.class );
@@ -48,16 +49,16 @@ public class NotificationsHelper {
 
         Intent disconnectIntent = new Intent( context, CastReceiver.class );
         disconnectIntent.putExtra( "action", "disconnect" );
-        notification.addAction( R.drawable.ic_stop_white_24dp, "Detener", PendingIntent.getBroadcast( context, NOTIFICATION_ID + 1, disconnectIntent, 0 ) );
+        notification.addAction( R.drawable.ic_mc_stop, "Detener", PendingIntent.getBroadcast( context, NOTIFICATION_ID + 1, disconnectIntent, 0 ) );
 
 
         Intent pauseIntent = new Intent( context, CastReceiver.class );
         pauseIntent.putExtra( "action", "pause" );
         PendingIntent pausePendingIntent = PendingIntent.getBroadcast( context, NOTIFICATION_ID + 2, pauseIntent, 0 );
         if ( !isPaused ) {
-            notification.addAction( R.drawable.ic_pause_white_24dp, "Pausar", pausePendingIntent );
+            notification.addAction( R.drawable.ic_mc_pause, "Pausar", pausePendingIntent );
         } else {
-            notification.addAction( R.drawable.ic_play_arrow_white_24dp, "Reanudar", pausePendingIntent );
+            notification.addAction( R.drawable.ic_mc_play, "Reanudar", pausePendingIntent );
         }
 
         final Handler mHandler = new Handler() {
@@ -72,12 +73,11 @@ public class NotificationsHelper {
             @Override
             public void run() {
                 try {
-                    Bitmap largeIcon = Glide.
+                    Bitmap largeIcon = ((BitmapDrawable)Glide.
                             with( context ).
                             load( icon ).
-                            asBitmap().
-                            into( 100, 100 ).
-                            get();
+                            submit( 100, 100 ).
+                            get()).getBitmap();
                     notification.setLargeIcon( largeIcon );
                 } catch ( InterruptedException e ) {
                     e.printStackTrace();

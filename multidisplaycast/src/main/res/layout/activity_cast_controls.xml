@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#24241f">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/movie_header"
@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            tools:background="#BABA"/>
+            tools:background="#BABA"
+            tools:srcCompat="@tools:sample/backgrounds/scenic"/>
 
         <RelativeLayout
             android:id="@+id/fadeBar"
@@ -32,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#cd000000">
+            android:background="@color/controls_alpha">
 
 
             <RelativeLayout
@@ -46,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="14dp"
-                    android:src="@drawable/cast_on"/>
+                    app:srcCompat="@drawable/cast_mc_on"/>
 
                 <TextView
                     android:id="@+id/movie_title"
@@ -62,7 +63,7 @@
                     android:shadowDy="1"
                     android:shadowRadius="1"
                     android:text="Título"
-                    android:textColor="#FFF"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="24sp"/>
             </RelativeLayout>
 
@@ -73,24 +74,23 @@
                 android:layout_below="@id/layoutTitle"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:paddingBottom="8dp"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
+                android:paddingBottom="8dp"
                 android:text="Subtítulo"
-                android:textColor="#FFF"
                 android:textSize="14sp"
                 android:visibility="visible"
                 tools:visibility="visible"/>
 
-            <android.support.v7.widget.AppCompatSeekBar
+            <androidx.appcompat.widget.AppCompatSeekBar
                 android:id="@+id/stream_seek_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/movie_subtitle"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:progressTint="@color/castPrimaryColor"
-                android:thumbTint="@color/castPrimaryColor"/>
+                android:progressTint="?colorAccent"
+                android:thumbTint="?colorAccent"/>
 
 
             <LinearLayout
@@ -117,7 +117,7 @@
                         android:gravity="left"
                         android:text="--:--"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#FFF"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textIsSelectable="false"/>
 
 
@@ -138,7 +138,7 @@
                         android:gravity="right"
                         android:text="--:--"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#FFF"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textIsSelectable="false"/>
                 </LinearLayout>
 
@@ -154,8 +154,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="65dp"
-        android:background="#24241f">
+        android:layout_marginBottom="65dp">
 
         <RelativeLayout
             android:id="@+id/play_layer"
@@ -169,12 +168,12 @@
                 android:layout_height="35dp"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="18dp"
-                android:layout_toLeftOf="@+id/stop"
                 android:layout_toStartOf="@+id/stop"
+                android:layout_toLeftOf="@+id/stop"
                 android:background="@drawable/shape_buttons"
                 android:clickable="true"
                 android:padding="4dp"
-                android:src="@drawable/ic_fast_rewind_white_24dp"
+                android:src="@drawable/ic_mc_fast_rewind"
                 android:visibility="gone"
                 tools:visibility="visible"/>
 
@@ -189,7 +188,7 @@
                 android:background="@drawable/shape_buttons"
                 android:clickable="true"
                 android:padding="4dp"
-                android:src="@drawable/ic_fast_forward_white_24dp"
+                android:src="@drawable/ic_mc_fast_forward"
                 android:visibility="gone"
                 tools:visibility="visible"/>
 
@@ -199,12 +198,12 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="18dp"
-                android:layout_toLeftOf="@+id/play"
                 android:layout_toStartOf="@+id/play"
+                android:layout_toLeftOf="@+id/play"
                 android:background="@drawable/shape_buttons"
                 android:clickable="true"
                 android:padding="10dp"
-                android:src="@drawable/ic_stop_white_24dp"/>
+                android:src="@drawable/ic_mc_stop"/>
 
             <ImageView
                 android:id="@+id/play"
@@ -215,7 +214,7 @@
                 android:background="@drawable/shape_buttons"
                 android:clickable="true"
                 android:padding="12dp"
-                android:src="@drawable/ic_pause_white_36dp"/>
+                android:src="@drawable/ic_mc_pause"/>
 
             <ImageView
                 android:id="@+id/volume"
@@ -228,7 +227,7 @@
                 android:background="@drawable/shape_buttons"
                 android:clickable="true"
                 android:padding="10dp"
-                android:src="@drawable/ic_volume_up_white_24dp"/>
+                android:src="@drawable/ic_mc_volume_up"/>
 
         </RelativeLayout>
 
@@ -240,7 +239,8 @@
         android:id="@+id/masterAdsLayer"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:layout_alignParentBottom="true" tools:background="@color/castPrimaryColor"/>
+        android:layout_alignParentBottom="true"
+        tools:background="?colorPrimary"/>
 
 
     <RelativeLayout
@@ -249,30 +249,39 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"
-        android:background="#FFF"
-        android:elevation="10dp"
-        android:padding="8dp"
         android:visibility="gone"
         tools:visibility="visible">
 
-        <TextView
-            android:id="@+id/volumeTitle"
-            android:layout_width="match_parent"
+        <androidx.cardview.widget.CardView
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Volumen"
-            android:textColor="#000"
-            android:textSize="16sp"/>
+            app:cardCornerRadius="4dp"
+            app:cardElevation="10dp"
+            app:contentPadding="8dp">
 
-        <android.support.v7.widget.AppCompatSeekBar
-            android:id="@+id/volumeControl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/volumeTitle"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="8dp"
-            android:progressTint="@color/castPrimaryColor"
-            android:thumbTint="@color/castPrimaryColor"/>
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/volumeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Volumen"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="16sp"/>
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/volumeControl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:progressTint="?colorAccent"
+                    android:thumbTint="?colorAccent"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 
@@ -290,16 +299,16 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:indeterminate="true"
-            android:indeterminateTint="@color/castPrimaryColor"/>
+            android:indeterminateTint="?colorAccent"/>
 
     </RelativeLayout>
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#8b000000"
+        android:background="@color/controls_alpha"
         android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/MultiCast.Toolbar.Transparent"/>

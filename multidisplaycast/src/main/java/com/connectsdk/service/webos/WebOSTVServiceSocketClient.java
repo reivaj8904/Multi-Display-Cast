@@ -662,6 +662,8 @@ public class WebOSTVServiceSocketClient extends WebSocketClient implements Servi
             super.setSocket( sslContext.getSocketFactory().createSocket() );
         } catch ( IOException e ) {
             Log.e( "SSL Setup", "failed to setup ssl socket", e );
+        } catch ( Exception e){
+            Log.e( "SSL Setup", "socket already set", e );
         }
     }
 

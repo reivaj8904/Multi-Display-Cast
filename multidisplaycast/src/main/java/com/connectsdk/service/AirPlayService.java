@@ -562,7 +562,7 @@ public class AirPlayService extends DeviceService implements MediaPlayer, MediaC
                     } else {
                         Util.postError( serviceCommand.getResponseListener(), ServiceCommandError.getError( code ) );
                     }
-                } catch ( IOException e ) {
+                } catch ( Exception e ) {
                     e.printStackTrace();
                     Util.postError( serviceCommand.getResponseListener(), new ServiceCommandError( 0, e
                             .getMessage(), null ) );

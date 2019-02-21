@@ -105,7 +105,7 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
     protected static final String CONNECTION_MANAGER = "ConnectionManager";
     protected static final String RENDERING_CONTROL = "RenderingControl";
     protected static final String GROUP_RENDERING_CONTROL = "GroupRenderingControl";
-    private static int TIMEOUT = 300;
+    private static int TIMEOUT = 1000;
     Context context;
     String avTransportURL, renderingControlURL, connectionControlURL;
     DLNAHttpServer httpServer;
@@ -813,9 +813,10 @@ public class DLNAService extends DeviceService implements PlaylistControl, Media
                     if ( code == 200 ) {
                         Util.postSuccess( command.getResponseListener(), connection.getResponseString() );
                     } else {
+                        Log.e("DLNA Service","Url: "+targetURL+"\nHttp code: "+code+" SOAPAction:\n"+String.format( "\"%s#%s\"", serviceURN, method )+"\nPayload: "+payload);
                         Util.postError( command.getResponseListener(), ServiceCommandError.getError( code ) );
                     }
-                } catch ( IOException e ) {
+                } catch ( Exception e ) {
                     Util.postError( command.getResponseListener(), new ServiceCommandError( 0, e.getMessage(), null ) );
                 }
             }

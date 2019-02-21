@@ -82,6 +82,7 @@ public abstract class HttpConnection {
 
         private HttpURLConnectionClient( URI uri ) throws IOException {
             this.connection = (HttpURLConnection) uri.toURL().openConnection();
+            connection.setConnectTimeout(10000);
         }
 
         @Override

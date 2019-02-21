@@ -1,15 +1,14 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    compileSdkVersion 28
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 19
-        versionCode 3
-        versionName "2.01"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 5
+        versionName "2.03"
         /**
          *  ConnectSDK Version
          *  android:versionCode="12"
@@ -35,20 +34,15 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile files('libs/java-websocket-1.3.1.jar')
-    compile files('libs/javax.jmdns_3.4.1-patch2.jar')
-    compile files('libs/AmazonFling.jar')
-    compile files('libs/WhisperPlay.jar')
+    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
 
-    compile rootProject.ext.appCompat
-    compile rootProject.ext.supportV4
-    compile rootProject.ext.appCompat
-    compile rootProject.ext.mediaRouter
-    compile rootProject.ext.supportDesign
-    compile rootProject.ext.playServicesCast
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.mediarouter:mediarouter:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.gms:play-services-cast:16.1.0'
 
-    compile rootProject.ext.glide
-    compile rootProject.ext.gson
-    compile rootProject.ext.munixUtilis
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

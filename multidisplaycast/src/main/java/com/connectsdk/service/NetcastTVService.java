@@ -2225,7 +2225,7 @@ public class NetcastTVService extends DeviceService implements Launcher, MediaCo
                     } else {
                         Util.postError( command.getResponseListener(), ServiceCommandError.getError( code ) );
                     }
-                } catch ( IOException e ) {
+                } catch ( Exception e ) {
                     e.printStackTrace();
                     Util.postError( command.getResponseListener(), new ServiceCommandError( 0, e.getMessage(), null ) );
                 }

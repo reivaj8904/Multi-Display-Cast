@@ -261,6 +261,8 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
                     e.printStackTrace();
                 } catch ( IOException e ) {
                     e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -853,7 +855,7 @@ public class RokuService extends DeviceService implements Launcher, MediaPlayer,
                     } else {
                         Util.postError( command.getResponseListener(), ServiceCommandError.getError( code ) );
                     }
-                } catch ( IOException e ) {
+                } catch ( Exception e ) {
                     e.printStackTrace();
                     Util.postError( command.getResponseListener(), new ServiceCommandError( 0, e.getMessage(), null ) );
                 }
