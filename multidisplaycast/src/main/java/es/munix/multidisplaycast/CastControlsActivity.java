@@ -9,6 +9,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import es.munix.multidisplaycast.interfaces.CastListener;
@@ -35,6 +37,7 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
     private TextView streamPositionTextView;
     private TextView streamDurationTextView;
     private ImageView pictureImageView;
+    private RelativeLayout masterAdslayer;
     private View loader;
     private View fadeBar;
     private View positionLayer;
@@ -65,6 +68,7 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
         streamPositionTextView = findViewById(R.id.stream_position);
         streamDurationTextView = findViewById(R.id.stream_duration);
         pictureImageView = findViewById(R.id.movie_picture);
+        masterAdslayer = findViewById(R.id.masterAdsLayer);
         loader = findViewById(R.id.loader);
         positionLayer = findViewById(R.id.positionLayer);
         fadeBar = findViewById(R.id.fadeBar);
@@ -100,11 +104,16 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
         }
     }
 
-    public GlideUrl createImgUrl(String url){
+    public GlideUrl createImgUrl(@NonNull String url){
         return new GlideUrl(url);
     }
 
+    public void setUpAd(RelativeLayout placeholder){
+
+    }
+
     private void paintInterface() {
+        setUpAd(masterAdslayer);
         mediaObject = CastManager.getInstance().getMediaObject();
         if (mediaObject == null) {
             finish();
