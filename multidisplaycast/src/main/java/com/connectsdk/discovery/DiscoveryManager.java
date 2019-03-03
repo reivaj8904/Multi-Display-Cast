@@ -502,6 +502,7 @@ public class DiscoveryManager implements ConnectableDeviceListener, DiscoveryPro
                             listener.onDiscoveryFailed( DiscoveryManager.this, new ServiceCommandError( 0, "No wifi connection", null ) );
                     }
                 }catch (Exception e){
+                    e.printStackTrace();
                     for ( DiscoveryManagerListener listener : discoveryListeners )
                         listener.onDiscoveryFailed( DiscoveryManager.this, new ServiceCommandError( 0, "Exception during discovery", null ) );
                 }

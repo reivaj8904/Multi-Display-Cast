@@ -108,7 +108,7 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
         return new GlideUrl(url);
     }
 
-    public void setUpAd(RelativeLayout placeholder){
+    public void setUpAd(@NonNull RelativeLayout placeholder){
 
     }
 
