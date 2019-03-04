@@ -343,49 +343,53 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
                         public void onSuccess(MediaPlayer.MediaLaunchObject object) {
 
-                            mediaObject = new MediaObject(title, subtitle, icon, mimeType, url);
-                            if (connectableDevice != null)
-                                mediaObject.setCanChangeVolume(connectableDevice.hasCapability(VolumeControl.Volume_Set));
-                            if (connectableDevice != null)
-                                mediaObject.setCanFastForwart(connectableDevice.hasCapability(MediaControl.FastForward));
+                            try {
+                                mediaObject = new MediaObject(title, subtitle, icon, mimeType, url);
+                                if (connectableDevice != null)
+                                    mediaObject.setCanChangeVolume(connectableDevice.hasCapability(VolumeControl.Volume_Set));
+                                if (connectableDevice != null)
+                                    mediaObject.setCanFastForwart(connectableDevice.hasCapability(MediaControl.FastForward));
 
-                            if (mediaObject.getCanChangeVolume()) {
-                                if (connectableDevice != null) {
-                                    connectableDevice.getCapability(VolumeControl.class)
-                                            .getVolume(new VolumeControl.VolumeListener() {
-                                                @Override
-                                                public void onSuccess(Float object) {
-                                                    if (mediaObject != null) {
-                                                        mediaObject.setCurrentVolume((int) (object * 100.0f));
+                                if (mediaObject.getCanChangeVolume()) {
+                                    if (connectableDevice != null) {
+                                        connectableDevice.getCapability(VolumeControl.class)
+                                                .getVolume(new VolumeControl.VolumeListener() {
+                                                    @Override
+                                                    public void onSuccess(Float object) {
+                                                        if (mediaObject != null) {
+                                                            mediaObject.setCurrentVolume((int) (object * 100.0f));
+                                                        }
                                                     }
-                                                }
 
-                                                @Override
-                                                public void onError(ServiceCommandError error) {
-                                                }
-                                            });
+                                                    @Override
+                                                    public void onError(ServiceCommandError error) {
+                                                    }
+                                                });
+                                    }
                                 }
-                            }
 
-                            NotificationsHelper.showNotification(context, title, subtitle, icon, false);
+                                NotificationsHelper.showNotification(context, title, subtitle, icon, false);
 
-                            mMediaControl = object.mediaControl;
-                            mMediaControl.subscribePlayState(CastManager.this);
+                                mMediaControl = object.mediaControl;
+                                mMediaControl.subscribePlayState(CastManager.this);
 
-                            for (Map.Entry<String, PlayStatusListener> playStatusListener : playStatusListeners
-                                    .entrySet()) {
-                                playStatusListener.getValue()
-                                        .onPlayStatusChanged(PlayStatusListener.STATUS_START_PLAYING);
-                            }
+                                for (Map.Entry<String, PlayStatusListener> playStatusListener : playStatusListeners
+                                        .entrySet()) {
+                                    playStatusListener.getValue()
+                                            .onPlayStatusChanged(PlayStatusListener.STATUS_START_PLAYING);
+                                }
 
-                            Intent i = new Intent(context, AntiLeakActivityService.class);
-                            i.addCategory("DummyServiceControl");
-                            context.startService(i);
+                                Intent i = new Intent(context, AntiLeakActivityService.class);
+                                i.addCategory("DummyServiceControl");
+                                context.startService(i);
 
-                            createListeners();
-                            startUpdating();
-                            if (disconnectDialog != null) {
-                                disconnectDialog.cancel();
+                                createListeners();
+                                startUpdating();
+                                if (disconnectDialog != null) {
+                                    disconnectDialog.cancel();
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
                             }
                         }
 
