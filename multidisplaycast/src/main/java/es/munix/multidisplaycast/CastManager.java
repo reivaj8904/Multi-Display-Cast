@@ -1,6 +1,7 @@
 package es.munix.multidisplaycast;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -79,10 +80,10 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     private WeakReference<Activity> activityWeakReference;
 
     //Dialogos
-    private AlertDialog connectToCastDialog;
-    private AlertDialog pairingAlertDialog;
-    private AlertDialog pairingCodeDialog;
-    private AlertDialog disconnectDialog;
+    private Dialog connectToCastDialog;
+    private Dialog pairingAlertDialog;
+    private Dialog pairingCodeDialog;
+    private Dialog disconnectDialog;
 
     //Listeners no implemetables
     private MediaControl.DurationListener durationListener;
@@ -255,7 +256,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
         Glide.with(context).load(image).into(imageView);
     }
 
-    public AlertDialog getDisconnectDialog(@NonNull Context context,@NonNull View customView, @Nullable String positiveText, @NonNull final DialogCallback dialogCallback){
+    public Dialog getDisconnectDialog(@NonNull Context context,@NonNull View customView, @Nullable String positiveText, @NonNull final DialogCallback dialogCallback){
         AlertDialog.Builder builder = new AlertDialog.Builder(context).setView(customView)
                 .setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
                     @Override
@@ -338,7 +339,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
         return false;
     }
 
-    public AlertDialog getPairingDialog(@NonNull Context context,@NonNull  String title,@NonNull  String message,String positiveText, String negativeText,@NonNull final DialogCallback dialogCallback){
+    public Dialog getPairingDialog(@NonNull Context context,@NonNull  String title,@NonNull  String message,String positiveText, String negativeText,@NonNull final DialogCallback dialogCallback){
         return new AlertDialog.Builder(context).setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(positiveText, null)
@@ -352,7 +353,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                 .create();
     }
 
-    public AlertDialog getPairingCodeDialog(@NonNull Context context,@NonNull  View view,@NonNull String title, String positiveText, String negativeText,@NonNull final DialogCallback callback){
+    public Dialog getPairingCodeDialog(@NonNull Context context,@NonNull  View view,@NonNull String title, String positiveText, String negativeText,@NonNull final DialogCallback callback){
         return new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setView(view)
