@@ -94,6 +94,12 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     private long currentPosition = 0;
     private MediaObject mediaObject;
 
+    public static CastManager setInstance(CastManager manager) {
+        if (instance == null) {
+            instance = manager;
+        }
+        return instance;
+    }
 
     public static CastManager getInstance() {
         if (instance == null) {
@@ -101,7 +107,6 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
         }
         return instance;
     }
-
 
     public static void register(Context context) {
         DiscoveryManager.init(context);
