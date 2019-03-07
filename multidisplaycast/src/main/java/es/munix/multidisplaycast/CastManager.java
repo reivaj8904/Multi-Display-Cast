@@ -41,9 +41,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import es.munix.multidisplaycast.helpers.NotificationsHelper;
 import es.munix.multidisplaycast.interfaces.CastListener;
+import es.munix.multidisplaycast.interfaces.DialogCallback;
 import es.munix.multidisplaycast.interfaces.PlayStatusListener;
 import es.munix.multidisplaycast.model.MediaObject;
 import es.munix.multidisplaycast.services.AntiLeakActivityService;
@@ -233,18 +236,25 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
         } else {
             mediaImage.setVisibility(View.GONE);
         }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setView(customView)
-                .setPositiveButton(disconnectLabel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                        disconnect();
-                    }
-                });
-        disconnectDialog = builder.create();
+        disconnectDialog = getDisconnectDialog(getActivity(),customView, disconnectLabel, new DialogCallback() {
+            @Override
+            public void onPositive() {
+                disconnect();
+            }
+        });
         if (getActivity() != null && !getActivity().isFinishing() && !getActivity().isDestroyed())
             disconnectDialog.show();
+    }
+
+    public AlertDialog getDisconnectDialog(@NonNull Context context,View customView, @Nullable String positiveText, final DialogCallback dialogCallback){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context).setView(customView)
+                .setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogCallback.onPositive();
+                    }
+                });
+        return builder.create();
     }
 
     public MediaObject getMediaObject() {
@@ -280,18 +290,13 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                 if (!getActivity().isFinishing() && !getActivity().isDestroyed())
                     connectToCastDialog.show();
 
-                pairingAlertDialog = new AlertDialog.Builder(getActivity()).setTitle("Conectando con su TV")
-                        .setMessage("Confirme la conexión con su TV")
-                        .setPositiveButton("Aceptar", null)
-                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                devicePicker.cancelPicker();
-                                connectToCastDialog.show();
-                            }
-                        })
-                        .create();
+                pairingAlertDialog = getPairingDialog(getActivity(), "Conectando con su TV", "Confirme la conexión con su TV", "Aceptar", "Cancelar", new DialogCallback() {
+                    @Override
+                    public void onNegative() {
+                        devicePicker.cancelPicker();
+                        connectToCastDialog.show();
+                    }
+                });
 
                 View v = View.inflate(getActivity(), R.layout.input_code_dialog, null);
                 final EditText input = v.findViewById(R.id.input);
@@ -301,27 +306,22 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                 final InputMethodManager imm = (InputMethodManager) getActivity().getApplicationContext()
                         .getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                pairingCodeDialog = new AlertDialog.Builder(getActivity()).setTitle("Ingrese el código que ve en la TV")
-                        .setView(v)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                if (connectableDevice != null) {
-                                    String value = input.getText().toString().trim();
-                                    connectableDevice.sendPairingKey(value);
-                                    imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
-                                }
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                pairingCodeDialog = getPairingCodeDialog(getActivity(), v, "Ingrese el código que ve en la TV", getActivity().getString(android.R.string.ok), getActivity().getString(android.R.string.cancel), new DialogCallback() {
+                    @Override
+                    public void onPositive() {
+                        if (connectableDevice != null) {
+                            String value = input.getText().toString().trim();
+                            connectableDevice.sendPairingKey(value);
+                            imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                        }
+                    }
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                devicePicker.cancelPicker();
-                                imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
-                            }
-                        })
-                        .create();
+                    @Override
+                    public void onNegative() {
+                        devicePicker.cancelPicker();
+                        imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                    }
+                });
             }
         }catch (Exception e){
             //
@@ -329,6 +329,39 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
         return false;
     }
 
+    public AlertDialog getPairingDialog(@NonNull Context context, String title, String message,String positiveText, String negativeText,final DialogCallback dialogCallback){
+        return new AlertDialog.Builder(context).setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(positiveText, null)
+                .setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialogCallback.onNegative();
+                    }
+                })
+                .create();
+    }
+
+    public AlertDialog getPairingCodeDialog(@NonNull Context context, View view,String title, String positiveText, String negativeText, final DialogCallback callback){
+        return new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setView(view)
+                .setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        callback.onPositive();
+                    }
+                })
+                .setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        callback.onNegative();
+                    }
+                })
+                .create();
+    }
 
     public void playMedia(final String url, final String mimeType, final String title, final String subtitle, final String icon) {
         if (isConnected()) {
