@@ -237,7 +237,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
         final ImageView mediaImage = customView.findViewById(R.id.mediaImage);
         if (image != null) {
-            Glide.with(getActivity()).load(image).into(mediaImage);
+            onLoadImage(getActivity(),image,mediaImage);
         } else {
             mediaImage.setVisibility(View.GONE);
         }
@@ -251,7 +251,11 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
             disconnectDialog.show();
     }
 
-    public AlertDialog getDisconnectDialog(@NonNull Context context,View customView, @Nullable String positiveText, final DialogCallback dialogCallback){
+    public void onLoadImage(@NonNull Context context,@NonNull String image,@NonNull ImageView imageView){
+        Glide.with(context).load(image).into(imageView);
+    }
+
+    public AlertDialog getDisconnectDialog(@NonNull Context context,@NonNull View customView, @Nullable String positiveText, @NonNull final DialogCallback dialogCallback){
         AlertDialog.Builder builder = new AlertDialog.Builder(context).setView(customView)
                 .setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
                     @Override
@@ -334,7 +338,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
         return false;
     }
 
-    public AlertDialog getPairingDialog(@NonNull Context context, String title, String message,String positiveText, String negativeText,final DialogCallback dialogCallback){
+    public AlertDialog getPairingDialog(@NonNull Context context,@NonNull  String title,@NonNull  String message,String positiveText, String negativeText,@NonNull final DialogCallback dialogCallback){
         return new AlertDialog.Builder(context).setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(positiveText, null)
@@ -348,7 +352,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                 .create();
     }
 
-    public AlertDialog getPairingCodeDialog(@NonNull Context context, View view,String title, String positiveText, String negativeText, final DialogCallback callback){
+    public AlertDialog getPairingCodeDialog(@NonNull Context context,@NonNull  View view,@NonNull String title, String positiveText, String negativeText,@NonNull final DialogCallback callback){
         return new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setView(view)
