@@ -96,6 +96,8 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     private MediaObject mediaObject;
 
     public static void setInstance(CastManager manager) {
+        if (instance != null)
+            manager.setContext(instance.getContext());
         instance = manager;
     }
 
@@ -113,6 +115,10 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
     private void setContext(Context context) {
         this.context = context;
+    }
+
+    private Context getContext() {
+        return context;
     }
 
     public void setDiscoveryManager() {
