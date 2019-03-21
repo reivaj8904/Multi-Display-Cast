@@ -94,6 +94,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     private long totalDuration = -1;
     private long currentPosition = 0;
     private MediaObject mediaObject;
+    private NotificationsHelper notificationsHelper = new NotificationsHelper();
 
     public static void setInstance(CastManager manager) {
         if (instance != null)
@@ -216,6 +217,11 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
     public void onDiscoveryFailed(DiscoveryManager manager, ServiceCommandError error) {
         Log.e(TAG, "onDiscoveryFailed");
         calculateMenuVisibility();
+    }
+
+
+    public NotificationsHelper getNotificationsHelper(){
+        return notificationsHelper;
     }
 
     public void disconnect() {
@@ -414,7 +420,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
                                     }
                                 }
 
-                                NotificationsHelper.showNotification(context, title, subtitle, icon, false);
+                                getNotificationsHelper().showNotification(context, title, subtitle, icon);
 
                                 mMediaControl = object.mediaControl;
                                 mMediaControl.subscribePlayState(CastManager.this);
@@ -460,9 +466,13 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
         activity.startActivity(i);
     }
 
+    public Class getControlsClass(){
+        return CastControlsActivity.class;
+    }
+
     private void unsetMediaControl() {
         mMediaControl = null;
-        NotificationsHelper.cancelNotification(context);
+        getNotificationsHelper().cancelNotification(context);
         for (Map.Entry<String, PlayStatusListener> playStatusListener : playStatusListeners.entrySet()) {
             playStatusListener.getValue().onPlayStatusChanged(PlayStatusListener.STATUS_STOPPED);
         }
@@ -520,8 +530,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
             if (!isPaused) {
                 mMediaControl.pause(null);
                 isPaused = true;
-                NotificationsHelper.showNotification(context, mediaObject.getTitle(), mediaObject.getSubtitle(), mediaObject
-                        .getImage(), isPaused);
+                getNotificationsHelper().updateButton(context, isPaused);
                 for (Map.Entry<String, PlayStatusListener> playStatusListener : playStatusListeners.entrySet()) {
                     playStatusListener.getValue()
                             .onPlayStatusChanged(PlayStatusListener.STATUS_PAUSED);
@@ -529,15 +538,14 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
             } else {
                 mMediaControl.play(null);
                 isPaused = false;
-                NotificationsHelper.showNotification(context, mediaObject.getTitle(), mediaObject.getSubtitle(), mediaObject
-                        .getImage(), isPaused);
+                getNotificationsHelper().updateButton(context, isPaused);
                 for (Map.Entry<String, PlayStatusListener> playStatusListener : playStatusListeners.entrySet()) {
                     playStatusListener.getValue()
                             .onPlayStatusChanged(PlayStatusListener.STATUS_RESUME_PAUSE);
                 }
             }
         } else {
-            NotificationsHelper.cancelNotification(context);
+            getNotificationsHelper().cancelNotification(context);
         }
     }
 
@@ -546,7 +554,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
             stopUpdating();
             mMediaControl.stop(null);
         } else {
-            NotificationsHelper.cancelNotification(context.getApplicationContext());
+            getNotificationsHelper().cancelNotification(context.getApplicationContext());
         }
         unsetMediaControl();
     }
@@ -620,7 +628,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
             mediaObject = null;
             statusStartPlayingFired = false;
             if (context != null) {
-                NotificationsHelper.cancelNotification(context);
+                getNotificationsHelper().cancelNotification(context);
             }
             if (connectToCastDialog != null) {
                 connectToCastDialog.cancel();
@@ -722,7 +730,7 @@ public class CastManager implements DiscoveryManagerListener, MenuItem.OnMenuIte
 
             case Finished:
                 log("PlayStateStatus: finished");
-                NotificationsHelper.cancelNotification(context);
+                getNotificationsHelper().cancelNotification(context);
                 for (Map.Entry<String, PlayStatusListener> playStatusListener : playStatusListeners.entrySet()) {
                     playStatusListener.getValue()
                             .onPlayStatusChanged(PlayStatusListener.STATUS_FINISHED);

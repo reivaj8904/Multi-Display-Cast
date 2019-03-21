@@ -1,93 +1,84 @@
 package es.munix.multidisplaycast.helpers;
 
+import android.annotation.TargetApi;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import androidx.core.app.NotificationCompat;
 
 import com.bumptech.glide.Glide;
 
+import java.io.ByteArrayOutputStream;
 import java.util.concurrent.ExecutionException;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import es.munix.multidisplaycast.CastControlsActivity;
 import es.munix.multidisplaycast.R;
 import es.munix.multidisplaycast.services.CastReceiver;
+import es.munix.multidisplaycast.services.ControlsService;
 
 /**
  * Created by munix on 3/11/16.
  */
 
 public class NotificationsHelper {
+    public static final String CHANNEL = "cast_notification";
 
-    public static final int NOTIFICATION_ID = 800;
-
-    public static void cancelNotification( Context context ) {
-        if ( context != null ) {
-            NotificationManager nMgr = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
-            nMgr.cancel( NOTIFICATION_ID );
+    public void cancelNotification(Context context) {
+        if (context != null) {
+            ContextCompat.startForegroundService(context, new Intent(context, ControlsService.class)
+                    .setAction("cancel"));
         }
     }
 
-    public static void showNotification( final Context context, String title, String subtitle, final String icon, Boolean isPaused ) {
-
-        final NotificationCompat.Builder notification = new NotificationCompat.Builder( context ).setOngoing( true )
-                .setAutoCancel( false )
-                .setContentTitle( title )
-                .setContentText( subtitle )
-                .setSmallIcon( R.drawable.cast_mc_on);
-
-
-        Intent castActivityIntent = new Intent( context, CastControlsActivity.class );
-        PendingIntent castActivityPendingIntent = PendingIntent.getActivity( context, NOTIFICATION_ID, castActivityIntent, 0 );
-        notification.setContentIntent( castActivityPendingIntent );
-
-
-        Intent disconnectIntent = new Intent( context, CastReceiver.class );
-        disconnectIntent.putExtra( "action", "disconnect" );
-        notification.addAction( R.drawable.ic_mc_stop, "Detener", PendingIntent.getBroadcast( context, NOTIFICATION_ID + 1, disconnectIntent, 0 ) );
-
-
-        Intent pauseIntent = new Intent( context, CastReceiver.class );
-        pauseIntent.putExtra( "action", "pause" );
-        PendingIntent pausePendingIntent = PendingIntent.getBroadcast( context, NOTIFICATION_ID + 2, pauseIntent, 0 );
-        if ( !isPaused ) {
-            notification.addAction( R.drawable.ic_mc_pause, "Pausar", pausePendingIntent );
-        } else {
-            notification.addAction( R.drawable.ic_mc_play, "Reanudar", pausePendingIntent );
+    public byte[] getBitmap(Context context, String link) {
+        try {
+            Bitmap largeIcon = ((BitmapDrawable) Glide.
+                    with(context).
+                    load(link).
+                    submit(100, 100).
+                    get()).getBitmap();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            largeIcon.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            return byteArrayOutputStream.toByteArray();
+        } catch (Exception e) {
+            return new byte[0];
         }
+    }
 
-        final Handler mHandler = new Handler() {
-            @Override
-            public void handleMessage( Message msg ) {
-                final NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
-                notificationManager.notify( NOTIFICATION_ID, notification.build() );
-            }
-        };
+    @TargetApi(Build.VERSION_CODES.O)
+    private void createChannel(Context context) {
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.createNotificationChannel(new NotificationChannel(CHANNEL, "Controles de CAST", NotificationManager.IMPORTANCE_MIN));
+    }
 
-        new Thread() {
+    public void updateButton(Context context, Boolean isPaused) {
+        ContextCompat.startForegroundService(context, new Intent(context, ControlsService.class)
+                .setAction("togglePause")
+                .putExtra("isPaused", isPaused));
+    }
+
+    public void showNotification(final Context context, final String title, final String subtitle, final String icon) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            createChannel(context);
+
+        AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Bitmap largeIcon = ((BitmapDrawable)Glide.
-                            with( context ).
-                            load( icon ).
-                            submit( 100, 100 ).
-                            get()).getBitmap();
-                    notification.setLargeIcon( largeIcon );
-                } catch ( InterruptedException e ) {
-                    e.printStackTrace();
-                } catch ( ExecutionException e ) {
-                    e.printStackTrace();
-                } catch ( OutOfMemoryError oom ) {
-                    oom.printStackTrace();
-                }
-                mHandler.sendEmptyMessage( 1 );
+                Intent intent = new Intent(context, ControlsService.class)
+                        .putExtra("title",title)
+                        .putExtra("subtitle",subtitle)
+                        .putExtra("image", getBitmap(context, icon));
+                ContextCompat.startForegroundService(context, intent);
             }
-        }.start();
+        });
     }
 }
