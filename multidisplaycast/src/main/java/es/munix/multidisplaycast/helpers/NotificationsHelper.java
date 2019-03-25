@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import java.io.ByteArrayOutputStream;
 import java.util.concurrent.ExecutionException;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import es.munix.multidisplaycast.CastControlsActivity;
@@ -39,7 +40,7 @@ public class NotificationsHelper {
         }
     }
 
-    public byte[] getBitmap(Context context, String link) {
+    public byte[] getBitmap(Context context, @NonNull String link) {
         try {
             Bitmap largeIcon = ((BitmapDrawable) Glide.
                     with(context).

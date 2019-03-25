@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 16
-        versionName "2.14"
+        versionCode 17
+        versionName "2.15"
         /**
          *  ConnectSDK Version
          *  android:versionCode="12"

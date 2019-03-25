@@ -469,45 +469,51 @@ public class DiscoveryManager implements ConnectableDeviceListener, DiscoveryPro
      * Start scanning for devices on the local network.
      */
     public void start() {
-        if ( mSearching )
-            return;
+        try {
+            if ( mSearching )
+                return;
 
-        if ( discoveryProviders == null ) {
-            return;
-        }
-
-        mSearching = true;
-        multicastLock.acquire();
-
-        Util.runOnUI( new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    if ( discoveryProviders.size() == 0 ) {
-                        registerDefaultDeviceTypes();
-                    }
-
-                    ConnectivityManager connManager = (ConnectivityManager) context.getSystemService( Context.CONNECTIVITY_SERVICE );
-                    NetworkInfo mWifi = connManager.getNetworkInfo( ConnectivityManager.TYPE_WIFI );
-
-                    if ( mWifi.isConnected() ) {
-                        for ( DiscoveryProvider provider : discoveryProviders ) {
-                            provider.start();
-                        }
-                    } else {
-                        Log.w( Util.T, "Wifi is not connected yet" );
-
-                        for ( DiscoveryManagerListener listener : discoveryListeners )
-                            listener.onDiscoveryFailed( DiscoveryManager.this, new ServiceCommandError( 0, "No wifi connection", null ) );
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                    for ( DiscoveryManagerListener listener : discoveryListeners )
-                        listener.onDiscoveryFailed( DiscoveryManager.this, new ServiceCommandError( 0, "Exception during discovery", null ) );
-                }
+            if ( discoveryProviders == null ) {
+                return;
             }
-        } );
+
+            mSearching = true;
+            multicastLock.acquire();
+
+            Util.runOnUI( new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        if ( discoveryProviders.size() == 0 ) {
+                            registerDefaultDeviceTypes();
+                        }
+
+                        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService( Context.CONNECTIVITY_SERVICE );
+                        NetworkInfo mWifi = connManager.getNetworkInfo( ConnectivityManager.TYPE_WIFI );
+
+                        if ( mWifi.isConnected() ) {
+                            for ( DiscoveryProvider provider : discoveryProviders ) {
+                                provider.start();
+                            }
+                        } else {
+                            Log.w( Util.T, "Wifi is not connected yet" );
+
+                            for ( DiscoveryManagerListener listener : discoveryListeners )
+                                listener.onDiscoveryFailed( DiscoveryManager.this, new ServiceCommandError( 0, "No wifi connection", null ) );
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        for ( DiscoveryManagerListener listener : discoveryListeners )
+                            listener.onDiscoveryFailed( DiscoveryManager.this, new ServiceCommandError( 0, "Exception during discovery", null ) );
+                    }
+                }
+            } );
+        }catch (Exception e){
+            e.printStackTrace();
+            for ( DiscoveryManagerListener listener : discoveryListeners )
+                listener.onDiscoveryFailed( DiscoveryManager.this, new ServiceCommandError( 0, "Exception starting discovery", null ) );
+        }
     }
     // @endcond
 
