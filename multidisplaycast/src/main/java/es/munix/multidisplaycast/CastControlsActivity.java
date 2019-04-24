@@ -3,6 +3,7 @@ package es.munix.multidisplaycast;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -157,9 +158,17 @@ public class CastControlsActivity extends AppCompatActivity implements CastListe
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_controls,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+        }else if (item.getItemId() == R.id.action_skip) {
+            CastManager.getInstance().seekTo(streamSeekBar.getProgress() + 85000);
         }
         return super.onOptionsItemSelected(item);
     }
