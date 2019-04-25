@@ -3,7 +3,7 @@
       xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_skip"
-        android:icon="@drawable/ic_skip"
+        android:icon="@drawable/ic_mc_skip"
         android:title="Skip"
         app:showAsAction="always"/>
 </menu>
