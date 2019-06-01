@@ -16,3 +16,4 @@
 #   public *;
 #}
 -dontwarn com.bumptech.glide.**
+-keep class com.bumptech.glide.request.RequestOptions {*;}
